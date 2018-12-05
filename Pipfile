@@ -7,7 +7,6 @@ verify_ssl = true
 
 [packages]
 googlemaps = "*"
-numpy = "*"
 ortools = "*"
 click = "*"
 

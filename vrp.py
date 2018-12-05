@@ -1,12 +1,14 @@
 import click
 
+from algorithms.scan_all import ScanAllSolver
 from algorithms.simulated_annealing import SimulatedAnnealingSolver
-from distance_matrix import create_distance_matrix
 from algorithms.ortools_solution import OrtoolsSolver
+from distance_matrix import create_distance_matrix
 
 ORTOOLS = 'ortools'
 SIMULATED_ANNEALING = 'simulated_annealing'
-TSP_ALGORITHMS = (ORTOOLS, SIMULATED_ANNEALING)
+SCAN_ALL = 'scan_all'
+TSP_ALGORITHMS = (ORTOOLS, SIMULATED_ANNEALING, SCAN_ALL)
 
 
 @click.group()
@@ -38,10 +40,15 @@ def tsp(distance_matrix, algorithm):
     Solves a Travelling Salesman Problem represented by distance matrix.
     """
     if algorithm == ORTOOLS:
-        solver = OrtoolsSolver(distance_matrix, depot=0, routes_to_find=1)
-    else:
+        solver = OrtoolsSolver(distance_matrix, routes_to_find=1)
+    elif algorithm == SIMULATED_ANNEALING:
         solver = SimulatedAnnealingSolver(distance_matrix, depot=0, routes_to_find=1)
         click.echo('Algorithm not supported yet')
+        return
+    elif algorithm == SCAN_ALL:
+        solver = ScanAllSolver(distance_matrix, routes_to_find=1)
+    else:
+        click.echo('Algorithm not supported.')
         return
 
     solver.solve()

@@ -5,10 +5,10 @@ from timer import timer
 
 
 class OrtoolsSolver(BaseSolver):
-    def __init__(self, distance_matrix_path, depot, routes_to_find):
-        super(OrtoolsSolver, self).__init__(distance_matrix_path, depot, routes_to_find)
+    def __init__(self, distance_matrix_path, routes_to_find):
+        super(OrtoolsSolver, self).__init__(distance_matrix_path, routes_to_find)
         self.distance_callback = self._create_distance_callback()
-
+        self.depot = 0
     @timer
     def solve(self):
         routing = pywrapcp.RoutingModel(self.destinations_count, self.routes_to_find, self.depot)
@@ -19,22 +19,18 @@ class OrtoolsSolver(BaseSolver):
 
     def _print_results(self, routing, assignment):
         if assignment:
-            route_number = 0
-            index = routing.Start(route_number)
+            index = routing.Start(self.depot)
             route = ''
             while not routing.IsEnd(index):
-                route += str(index) + '  ' + str(self.destinations[routing.IndexToNode(index)]) + ' -> \n'
+                route += f'{index}  {self.destinations[routing.IndexToNode(index)]} \n'
                 index = assignment.Value(routing.NextVar(index))
             route += str(self.destinations[routing.IndexToNode(index)])
             print("Route:\n" + route)
-            print("\nTotal distance: " + str(assignment.ObjectiveValue()) + " meters")
+            print(f"\nTotal distance: {assignment.ObjectiveValue()} meters")
         else:
             print('No solution found.')
 
     def _create_distance_callback(self):
         # type: () -> function
 
-        def distance_callback(from_node, to_node):
-            return int(self.distance_matrix[from_node][to_node])
-
-        return distance_callback
+        return self.arc_cost
