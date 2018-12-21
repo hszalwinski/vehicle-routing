@@ -9,6 +9,7 @@ class OrtoolsSolver(BaseSolver):
         super(OrtoolsSolver, self).__init__(distance_matrix_path, routes_to_find)
         self.distance_callback = self._create_distance_callback()
         self.depot = 0
+
     @timer
     def solve(self):
         routing = pywrapcp.RoutingModel(self.destinations_count, self.routes_to_find, self.depot)
@@ -33,4 +34,4 @@ class OrtoolsSolver(BaseSolver):
     def _create_distance_callback(self):
         # type: () -> function
 
-        return self.arc_cost
+        return self._arc_cost

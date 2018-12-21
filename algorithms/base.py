@@ -25,5 +25,37 @@ class BaseSolver(metaclass=abc.ABCMeta):
     def solve(self):
         pass
 
-    def arc_cost(self, from_node, to_node):
+    def _arc_cost(self, from_node, to_node):
+        # type: (int, int) -> float
+
         return int(self.distance_matrix[from_node][to_node])
+
+    def _get_sequence_cost(self, sequence):
+        # type: (tuple or list) -> float
+
+        sequence = self._update_sequence_with_depot_node(sequence)
+        cost = 0
+        for i in range(0, len(sequence) - 1):
+            cost += self._arc_cost(sequence[i], sequence[i + 1])
+
+        return cost
+
+    def _print_results(self, sequence, cost):
+        # type: (tuple or list, float) -> None
+
+        sequence = self._update_sequence_with_depot_node(sequence)
+        route = ''
+        for index in sequence:
+            route += f'{index}  {self.destinations[index]} \n'
+        print("Route:\n" + route)
+        print(f"Total distance: {cost} meters")
+
+    def _update_sequence_with_depot_node(self, sequence):
+        # type: (tuple or list) -> tuple or list
+
+        if type(sequence) is tuple:
+            sequence = (0,) + sequence + (0,)
+        else:
+            sequence = [0] + sequence + [0]
+
+        return sequence
