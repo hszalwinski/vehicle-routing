@@ -2,35 +2,39 @@ import numpy as np
 
 from timer import timer
 from random import shuffle, random, randint
+from copy import deepcopy
 
 from algorithms.base import BaseSolver
 
-DEFAULT_ANNEALING_SPEED = 10
-DEFAULT_ITERATIONS_COUNT = 1000
+DEFAULT_TEMPERATURE_FACTOR = 10
 
 
 class SimulatedAnnealingSolver(BaseSolver):
-    def __init__(self, distance_matrix_path, routes_to_find, annealing_speed, iterations_count):
+    def __init__(self, distance_matrix_path, routes_to_find, temperature_factor, iterations_count):
         super(SimulatedAnnealingSolver, self).__init__(distance_matrix_path, routes_to_find)
         self._solution = self._generate_initial_sequence()
         self._solution_cost = self._get_sequence_cost(self._solution)
-        self._annealing_speed = annealing_speed
+        self._temperature_factor = temperature_factor
         self._iterations_count = iterations_count
 
     @timer
     def solve(self):
-        sequence = self._solution
+        sequence = deepcopy(self._solution)
 
         for i in range(0, self._iterations_count):
-            new_sequence = self._create_new_sequence(sequence)
+            new_sequence = self._create_new_sequence(deepcopy(sequence))
             cost = self._get_sequence_cost(new_sequence)
 
             if cost < self._solution_cost:
-                self._solution = new_sequence
-                self._solution_cost = cost
+                sequence = new_sequence
+                self._solution = deepcopy(sequence)
+                self._solution_cost = deepcopy(cost)
+                # print(f"New solution: {self._solution} cost: {self._solution_cost}")
             else:
-                if random() > self.calculate_probability(i, cost):
-                    pass
+                if self.calculate_probability(i, cost) > random():
+                    sequence = new_sequence
+
+        self._print_results(self._solution, self._solution_cost)
 
     def _generate_initial_sequence(self):
         # type: () -> list
@@ -42,12 +46,16 @@ class SimulatedAnnealingSolver(BaseSolver):
 
     def _create_new_sequence(self, sequence):
         # type: (list) -> list
+        '''
+        Change places in sequence of 2 points
+        '''
+        index_a = randint(0, len(sequence) - 1)
+        index_b = randint(0, len(sequence) - 1)
 
-        index1 = randint(0, len(sequence))
-        next1 = index1 + 1 if index1 + 1 <
-        random_index2 = randint(0, len(sequence))
-
-
+        if index_a != index_b:
+            sequence[index_a], sequence[index_b] = sequence[index_b], sequence[index_a]
+        else:
+            self._create_new_sequence(sequence)
 
         return sequence
 
@@ -59,9 +67,7 @@ class SimulatedAnnealingSolver(BaseSolver):
 
         return probability
 
-    def _calculate_temperature(self, interation_number):
+    def _calculate_temperature(self, iteration_number):
         # type: (int) -> float
 
-        T = self._annealing_speed / np.log10(interation_number + 10)
-
-        return T
+        return self._temperature_factor / np.log(iteration_number + 1)

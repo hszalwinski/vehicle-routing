@@ -1,0 +1,572 @@
+{
+  "configuration": {
+    "computingTime": 3600,
+    "optimization": {
+      "minimizeWaitingTime": false,
+      "minimizeVehiclesUsed": true,
+      "maximizeCompartmentLoad": true,
+      "minimizeCompartmentsUsedPerTask": false,
+      "composeLtcs": false
+    },
+    "constraints": {
+      "timeWindowsEnabled": true,
+      "maxWorkTimeEnabled": true,
+      "maxRouteDistanceEnabled": true,
+      "maxRouteTimeEnabled": true,
+      "ltcAvailabilityEnabled": true,
+      "transshipmentPointsEnabled": true,
+      "mixMilkBetweenCompartments": true
+    }
+  },
+  "depot": {
+    "locationId": -3,
+    "factoryId": 5005,
+    "latitude": 53.402624,
+    "longitude": 21.923223,
+    "maxWaitingTime": 180,
+    "minimalLoad": 500,
+    "depotRamp": {
+      "pumpCapacity": 280,
+      "rampConstant": 4,
+      "openFrom": 0,
+      "openUntil": 1439
+    }
+  },
+  "ltcs": [
+    {
+      "vehicleSetId": 1,
+      "maxWorkTime": 600,
+      "maxRouteDistance": 400,
+      "totalCapacity": 17300,
+      "pumpCapacity": 280,
+      "availableFrom": 0,
+      "availableUntil": 1439,
+      "tankTruckCompartments": [
+        7350,
+        4170,
+        5780,
+        0,
+        0,
+        0
+      ],
+      "trailerCompartments": []
+    },
+    {
+      "vehicleSetId": 2,
+      "maxWorkTime": 600,
+      "maxRouteDistance": 400,
+      "totalCapacity": 17661,
+      "pumpCapacity": 280,
+      "availableFrom": 0,
+      "availableUntil": 1439,
+      "tankTruckCompartments": [
+        5960,
+        5612,
+        6089,
+        0,
+        0,
+        0
+      ],
+      "trailerCompartments": []
+    },
+    {
+      "vehicleSetId": 4,
+      "maxWorkTime": 600,
+      "maxRouteDistance": 400,
+      "totalCapacity": 15400,
+      "pumpCapacity": 280,
+      "availableFrom": 0,
+      "availableUntil": 1439,
+      "tankTruckCompartments": [
+        4660,
+        5520,
+        5220,
+        0,
+        0,
+        0
+      ],
+      "trailerCompartments": []
+    },
+    {
+      "vehicleSetId": 5,
+      "maxWorkTime": 600,
+      "maxRouteDistance": 400,
+      "totalCapacity": 18000,
+      "pumpCapacity": 280,
+      "availableFrom": 0,
+      "availableUntil": 1439,
+      "tankTruckCompartments": [
+        5400,
+        6000,
+        6600,
+        0,
+        0,
+        0
+      ],
+      "trailerCompartments": []
+    },
+    {
+      "vehicleSetId": 6,
+      "maxWorkTime": 600,
+      "maxRouteDistance": 400,
+      "totalCapacity": 17601,
+      "pumpCapacity": 280,
+      "availableFrom": 0,
+      "availableUntil": 1439,
+      "tankTruckCompartments": [
+        5559,
+        6460,
+        5582,
+        0,
+        0,
+        0
+      ],
+      "trailerCompartments": []
+    },
+    {
+      "vehicleSetId": 7,
+      "maxWorkTime": 600,
+      "maxRouteDistance": 400,
+      "totalCapacity": 32250,
+      "pumpCapacity": 280,
+      "availableFrom": 0,
+      "availableUntil": 1439,
+      "tankTruckCompartments": [
+        5250,
+        5300,
+        5500,
+        0,
+        0,
+        0
+      ],
+      "trailerCompartments": [
+        5300,
+        5350,
+        5550,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "vehicleSetId": 8,
+      "maxWorkTime": 600,
+      "maxRouteDistance": 400,
+      "totalCapacity": 15110,
+      "pumpCapacity": 280,
+      "availableFrom": 0,
+      "availableUntil": 1439,
+      "tankTruckCompartments": [
+        4710,
+        5400,
+        5000,
+        0,
+        0,
+        0
+      ],
+      "trailerCompartments": []
+    },
+    {
+      "vehicleSetId": 9,
+      "maxWorkTime": 600,
+      "maxRouteDistance": 400,
+      "totalCapacity": 18000,
+      "pumpCapacity": 280,
+      "availableFrom": 0,
+      "availableUntil": 1439,
+      "tankTruckCompartments": [
+        7000,
+        4000,
+        7000,
+        0,
+        0,
+        0
+      ],
+      "trailerCompartments": []
+    },
+    {
+      "vehicleSetId": 10,
+      "maxWorkTime": 600,
+      "maxRouteDistance": 400,
+      "totalCapacity": 17925,
+      "pumpCapacity": 280,
+      "availableFrom": 0,
+      "availableUntil": 1439,
+      "tankTruckCompartments": [
+        6525,
+        2310,
+        6110,
+        2980,
+        0,
+        0
+      ],
+      "trailerCompartments": []
+    },
+    {
+      "vehicleSetId": 11,
+      "maxWorkTime": 600,
+      "maxRouteDistance": 400,
+      "totalCapacity": 17270,
+      "pumpCapacity": 280,
+      "availableFrom": 0,
+      "availableUntil": 1439,
+      "tankTruckCompartments": [
+        6900,
+        3620,
+        6750,
+        0,
+        0,
+        0
+      ],
+      "trailerCompartments": []
+    },
+    {
+      "vehicleSetId": 12,
+      "maxWorkTime": 600,
+      "maxRouteDistance": 400,
+      "totalCapacity": 16181,
+      "pumpCapacity": 280,
+      "availableFrom": 0,
+      "availableUntil": 1439,
+      "tankTruckCompartments": [
+        4585,
+        5925,
+        5671,
+        0,
+        0,
+        0
+      ],
+      "trailerCompartments": []
+    },
+    {
+      "vehicleSetId": 13,
+      "maxWorkTime": 600,
+      "maxRouteDistance": 400,
+      "totalCapacity": 18120,
+      "pumpCapacity": 280,
+      "availableFrom": 0,
+      "availableUntil": 1439,
+      "tankTruckCompartments": [
+        5100,
+        2760,
+        5120,
+        5140,
+        0,
+        0
+      ],
+      "trailerCompartments": []
+    },
+    {
+      "vehicleSetId": 14,
+      "maxWorkTime": 600,
+      "maxRouteDistance": 400,
+      "totalCapacity": 32260,
+      "pumpCapacity": 280,
+      "availableFrom": 0,
+      "availableUntil": 1439,
+      "tankTruckCompartments": [
+        4750,
+        3060,
+        5650,
+        4550,
+        0,
+        0
+      ],
+      "trailerCompartments": [
+        4650,
+        4800,
+        4800,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "vehicleSetId": 15,
+      "maxWorkTime": 600,
+      "maxRouteDistance": 400,
+      "totalCapacity": 17400,
+      "pumpCapacity": 280,
+      "availableFrom": 0,
+      "availableUntil": 1439,
+      "tankTruckCompartments": [
+        5100,
+        6300,
+        6000,
+        0,
+        0,
+        0
+      ],
+      "trailerCompartments": []
+    },
+    {
+      "vehicleSetId": 16,
+      "maxWorkTime": 600,
+      "maxRouteDistance": 400,
+      "totalCapacity": 16250,
+      "pumpCapacity": 280,
+      "availableFrom": 0,
+      "availableUntil": 1439,
+      "tankTruckCompartments": [
+        6750,
+        3000,
+        6500,
+        0,
+        0,
+        0
+      ],
+      "trailerCompartments": []
+    },
+    {
+      "vehicleSetId": 17,
+      "maxWorkTime": 600,
+      "maxRouteDistance": 400,
+      "totalCapacity": 15500,
+      "pumpCapacity": 280,
+      "availableFrom": 0,
+      "availableUntil": 1439,
+      "tankTruckCompartments": [
+        5100,
+        5100,
+        5300,
+        0,
+        0,
+        0
+      ],
+      "trailerCompartments": []
+    },
+    {
+      "vehicleSetId": 18,
+      "maxWorkTime": 600,
+      "maxRouteDistance": 400,
+      "totalCapacity": 17250,
+      "pumpCapacity": 280,
+      "availableFrom": 0,
+      "availableUntil": 1439,
+      "tankTruckCompartments": [
+        5150,
+        6950,
+        5150,
+        0,
+        0,
+        0
+      ],
+      "trailerCompartments": []
+    },
+    {
+      "vehicleSetId": 21,
+      "maxWorkTime": 600,
+      "maxRouteDistance": 400,
+      "totalCapacity": 15000,
+      "pumpCapacity": 280,
+      "availableFrom": 0,
+      "availableUntil": 1439,
+      "tankTruckCompartments": [
+        5000,
+        5000,
+        5000,
+        0,
+        0,
+        0
+      ],
+      "trailerCompartments": []
+    },
+    {
+      "vehicleSetId": 22,
+      "maxWorkTime": 600,
+      "maxRouteDistance": 400,
+      "totalCapacity": 34060,
+      "pumpCapacity": 280,
+      "availableFrom": 0,
+      "availableUntil": 1439,
+      "tankTruckCompartments": [
+        5500,
+        6650,
+        6050,
+        0,
+        0,
+        0
+      ],
+      "trailerCompartments": [
+        3000,
+        6200,
+        6660,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "specialRouteTasks": [
+    {
+      "locationId": 1,
+      "dbId": 1,
+      "latitude": 53.42389,
+      "longitude": 22.160233,
+      "availableLoad": 979.0,
+      "allowsEmptyLtc": true,
+      "allowsLoadedLtc": true,
+      "timeWindows": [
+        {
+          "startTime": 0,
+          "endTime": 1439
+        }
+      ],
+      "trailerCustomer": true,
+      "transshipmentPoint": false
+    },
+    {
+      "locationId": 4,
+      "dbId": 4,
+      "latitude": 53.49002,
+      "longitude": 22.255988,
+      "availableLoad": 329.0,
+      "allowsEmptyLtc": true,
+      "allowsLoadedLtc": true,
+      "timeWindows": [
+        {
+          "startTime": 0,
+          "endTime": 1439
+        }
+      ],
+      "trailerCustomer": true,
+      "transshipmentPoint": false
+    },
+    {
+      "locationId": 5,
+      "dbId": 5,
+      "latitude": 53.417436,
+      "longitude": 21.954643,
+      "availableLoad": 221.0,
+      "allowsEmptyLtc": true,
+      "allowsLoadedLtc": true,
+      "timeWindows": [
+        {
+          "startTime": 0,
+          "endTime": 1439
+        }
+      ],
+      "trailerCustomer": true,
+      "transshipmentPoint": true
+    },
+    {
+      "locationId": 6,
+      "dbId": 6,
+      "latitude": 53.421288,
+      "longitude": 21.952898,
+      "availableLoad": 344.0,
+      "allowsEmptyLtc": true,
+      "allowsLoadedLtc": true,
+      "timeWindows": [
+        {
+          "startTime": 0,
+          "endTime": 1439
+        }
+      ],
+      "trailerCustomer": false,
+      "transshipmentPoint": false
+    },
+    {
+      "locationId": 8,
+      "dbId": 8,
+      "latitude": 53.426892,
+      "longitude": 21.955797,
+      "availableLoad": 153.0,
+      "allowsEmptyLtc": true,
+      "allowsLoadedLtc": true,
+      "timeWindows": [
+        {
+          "startTime": 0,
+          "endTime": 1439
+        }
+      ],
+      "trailerCustomer": true,
+      "transshipmentPoint": true
+    },
+    {
+      "locationId": 14,
+      "dbId": 14,
+      "latitude": 53.431711,
+      "longitude": 21.836963,
+      "availableLoad": 291.0,
+      "allowsEmptyLtc": true,
+      "allowsLoadedLtc": true,
+      "timeWindows": [
+        {
+          "startTime": 0,
+          "endTime": 1439
+        }
+      ],
+      "trailerCustomer": true,
+      "transshipmentPoint": false
+    },
+    {
+      "locationId": 15,
+      "dbId": 15,
+      "latitude": 53.419927,
+      "longitude": 21.881982,
+      "availableLoad": 514.0,
+      "allowsEmptyLtc": true,
+      "allowsLoadedLtc": true,
+      "timeWindows": [
+        {
+          "startTime": 0,
+          "endTime": 1439
+        }
+      ],
+      "trailerCustomer": false,
+      "transshipmentPoint": false
+    },
+    {
+      "locationId": 21,
+      "dbId": 1438,
+      "latitude": 53.474723,
+      "longitude": 21.919253,
+      "availableLoad": 413.0,
+      "allowsEmptyLtc": true,
+      "allowsLoadedLtc": true,
+      "timeWindows": [
+        {
+          "startTime": 0,
+          "endTime": 1439
+        }
+      ],
+      "trailerCustomer": false,
+      "transshipmentPoint": false
+    },
+    {
+      "locationId": 22,
+      "dbId": 21,
+      "latitude": 53.474656,
+      "longitude": 21.920273,
+      "availableLoad": 416.0,
+      "allowsEmptyLtc": true,
+      "allowsLoadedLtc": true,
+      "timeWindows": [
+        {
+          "startTime": 0,
+          "endTime": 1439
+        }
+      ],
+      "trailerCustomer": false,
+      "transshipmentPoint": false
+    },
+    {
+      "locationId": 25,
+      "dbId": 24,
+      "latitude": 53.470476,
+      "longitude": 21.945493,
+      "availableLoad": 364.0,
+      "allowsEmptyLtc": true,
+      "allowsLoadedLtc": true,
+      "timeWindows": [
+        {
+          "startTime": 0,
+          "endTime": 1439
+        }
+      ],
+      "trailerCustomer": true,
+      "transshipmentPoint": true
+    }
+  ]
+}

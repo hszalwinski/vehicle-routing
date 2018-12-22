@@ -40,16 +40,6 @@ class BaseSolver(metaclass=abc.ABCMeta):
 
         return cost
 
-    def _print_results(self, sequence, cost):
-        # type: (tuple or list, float) -> None
-
-        sequence = self._update_sequence_with_depot_node(sequence)
-        route = ''
-        for index in sequence:
-            route += f'{index}  {self.destinations[index]} \n'
-        print("Route:\n" + route)
-        print(f"Total distance: {cost} meters")
-
     def _update_sequence_with_depot_node(self, sequence):
         # type: (tuple or list) -> tuple or list
 
@@ -59,3 +49,13 @@ class BaseSolver(metaclass=abc.ABCMeta):
             sequence = [0] + sequence + [0]
 
         return sequence
+
+    def _print_results(self, sequence, cost):
+        # type: (tuple or list, float) -> None
+
+        sequence = self._update_sequence_with_depot_node(sequence)
+        route = ''
+        for index in sequence:
+            route += f'{index}  {self.destinations[index]} \n'
+        print("Route:\n" + route)
+        print(f"Total distance: {cost} meters")
