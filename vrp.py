@@ -1,6 +1,6 @@
 import click
 
-from algorithms.genetic import GeneticSolver
+from algorithms.genetic import GeneticSolver, SELECTION_METHODS, RANK_SELECTION_METHOD
 from algorithms.scan_all import ScanAllSolver
 from algorithms.simulated_annealing import SimulatedAnnealingSolver, DEFAULT_TEMPERATURE_FACTOR
 from algorithms.ortools_solution import OrtoolsSolver
@@ -43,8 +43,10 @@ def distance_matrix(app_key, input_json, output_csv, output_pickle):
 @click.option('--temperature-factor', '-t', type=click.IntRange(min=1, max=1_000), required=False, show_default=True,
               default=DEFAULT_TEMPERATURE_FACTOR)
 @click.option('--population-size', '-p', type=click.IntRange(min=5, max=1_000), show_default=True, default=100)
+@click.option('--selection-method', '-s', type=click.Choice(SELECTION_METHODS, case_sensitive=False),
+              show_default=True, default=RANK_SELECTION_METHOD)
 @timer
-def tsp(distance_matrix, algorithm, iterations, temperature_factor, population_size):
+def tsp(distance_matrix, algorithm, iterations, temperature_factor, population_size, selection_method):
     """
     Solves a Travelling Salesman Problem represented by distance matrix.
     """
@@ -59,7 +61,8 @@ def tsp(distance_matrix, algorithm, iterations, temperature_factor, population_s
         solver = GeneticSolver(distance_matrix,
                                routes_to_find=1,
                                population_size=population_size,
-                               iterations_count=iterations)
+                               iterations_count=iterations,
+                               selection_method=selection_method)
     elif algorithm == SCAN_ALL:
         solver = ScanAllSolver(distance_matrix, routes_to_find=1)
     else:
