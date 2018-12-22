@@ -1,9 +1,11 @@
 import click
 
+from algorithms.genetic import GeneticSolver
 from algorithms.scan_all import ScanAllSolver
 from algorithms.simulated_annealing import SimulatedAnnealingSolver, DEFAULT_TEMPERATURE_FACTOR
 from algorithms.ortools_solution import OrtoolsSolver
 from distance_matrix import create_distance_matrix
+from timer import timer
 
 ORTOOLS = 'ortools'
 SIMULATED_ANNEALING = 'simulated_annealing'
@@ -38,9 +40,11 @@ def distance_matrix(app_key, input_json, output_csv, output_pickle):
 @click.option('--algorithm', '-a', type=click.Choice(TSP_ALGORITHMS, case_sensitive=False),
               show_default=True, default=ORTOOLS)
 @click.option('--iterations', '-i', type=click.IntRange(min=1, max=1_000_000_000), show_default=True, default=1_000)
-@click.option('--temperature-factor', '-t', type=click.IntRange(min=1, max=1000), required=False, show_default=True,
+@click.option('--temperature-factor', '-t', type=click.IntRange(min=1, max=1_000), required=False, show_default=True,
               default=DEFAULT_TEMPERATURE_FACTOR)
-def tsp(distance_matrix, algorithm, iterations, temperature_factor):
+@click.option('--population-size', '-p', type=click.IntRange(min=5, max=1_000), show_default=True, default=100)
+@timer
+def tsp(distance_matrix, algorithm, iterations, temperature_factor, population_size):
     """
     Solves a Travelling Salesman Problem represented by distance matrix.
     """
@@ -52,8 +56,10 @@ def tsp(distance_matrix, algorithm, iterations, temperature_factor):
                                           temperature_factor=temperature_factor,
                                           iterations_count=iterations)
     elif algorithm == GENETIC:
-        click.echo('Algorithm not supported yet')
-        return
+        solver = GeneticSolver(distance_matrix,
+                               routes_to_find=1,
+                               population_size=population_size,
+                               iterations_count=iterations)
     elif algorithm == SCAN_ALL:
         solver = ScanAllSolver(distance_matrix, routes_to_find=1)
     else:

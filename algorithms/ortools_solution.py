@@ -1,7 +1,6 @@
 from ortools.constraint_solver import pywrapcp
 
 from algorithms.base import BaseSolver
-from timer import timer
 
 
 class OrtoolsSolver(BaseSolver):
@@ -10,7 +9,6 @@ class OrtoolsSolver(BaseSolver):
         self.distance_callback = self._create_distance_callback()
         self.depot = 0
 
-    @timer
     def solve(self):
         routing = pywrapcp.RoutingModel(self.destinations_count, self.routes_to_find, self.depot)
         search_parameters = pywrapcp.RoutingModel.DefaultSearchParameters()

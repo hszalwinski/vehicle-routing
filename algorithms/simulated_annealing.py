@@ -1,12 +1,11 @@
 import numpy as np
 
-from timer import timer
 from random import shuffle, random, randint
 from copy import deepcopy
 
 from algorithms.base import BaseSolver
 
-DEFAULT_TEMPERATURE_FACTOR = 10
+DEFAULT_TEMPERATURE_FACTOR = 100
 
 
 class SimulatedAnnealingSolver(BaseSolver):
@@ -17,7 +16,6 @@ class SimulatedAnnealingSolver(BaseSolver):
         self._temperature_factor = temperature_factor
         self._iterations_count = iterations_count
 
-    @timer
     def solve(self):
         sequence = deepcopy(self._solution)
 
