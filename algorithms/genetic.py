@@ -19,6 +19,7 @@ class GeneticSolver(BaseSolver):
         self._perform_selection = self._rank_selection \
             if selection_method == RANK_SELECTION_METHOD else self._roulette_selection
         self._perform_crossing = self._pmx_crossing
+
     def solve(self):
         population = self._generate_initial_population()
         population_costs = self._get_population_costs(population)
