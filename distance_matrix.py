@@ -3,8 +3,11 @@ import pickle
 import csv
 
 from pathlib import Path
+from jsonschema import validate
 
 import googlemaps
+
+INPUT_DATA_SCHEMA_PATH = Path('data', 'input_data_schema.json')
 
 
 def load_data_from_file(path):
@@ -19,7 +22,7 @@ def load_data_from_file(path):
 def extract_coordinates(data_dict):
     # type: (dict) -> list[tuple]
 
-    locations = data_dict['specialRouteTasks']
+    locations = data_dict['locations']
     coordinates = []
     for location in locations:
         coordinates.append((location['latitude'], location['longitude']))
@@ -70,7 +73,10 @@ def load_distance_matrix_from_pickle_file(path):
 def create_distance_matrix(app_key, input_json, output_csv, output_pickle=None):
     # type: (str, str, str, str or None) -> None
 
+    schema = load_data_from_file(path=INPUT_DATA_SCHEMA_PATH)
     data_dict = load_data_from_file(path=input_json)
+    validate(data_dict, schema)
+
     gmaps = googlemaps.Client(key=app_key)
 
     coordinates = extract_coordinates(data_dict)

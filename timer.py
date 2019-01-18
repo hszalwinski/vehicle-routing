@@ -8,7 +8,7 @@ def timer(decorated_function):
         start = time()
         result = decorated_function(*args, **kwargs)
         end = time()
-        print(f'Algorithm took {end-start} seconds to perform.')
+        print(f'Algorithm took {end - start} seconds to perform.')
 
         return result
 
