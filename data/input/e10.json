@@ -1,0 +1,79 @@
+{
+  "configuration": {
+    "optimization": {
+      "minimizeWaitingTime": false,
+      "minimizeVehiclesUsed": true
+    },
+    "constraints": {
+      "maxWorkTimeEnabled": true,
+      "maxRouteDistanceEnabled": true,
+      "maxRouteTimeEnabled": true
+    }
+  },
+  "vehicles": [
+    {
+      "vehicleId": 1,
+      "maxWorkTime": 600,
+      "maxRouteDistance": 400,
+      "totalCapacity": 17300
+    },
+    {
+      "vehicleId": 2,
+      "maxWorkTime": 600,
+      "maxRouteDistance": 400,
+      "totalCapacity": 17661
+    }
+  ],
+  "locations": [
+    {
+      "locationId": 1,
+      "latitude": 53.42389,
+      "longitude": 22.160233
+    },
+    {
+      "locationId": 2,
+      "latitude": 53.49002,
+      "longitude": 22.255988
+    },
+    {
+      "locationId": 3,
+      "latitude": 53.417436,
+      "longitude": 21.954643
+    },
+    {
+      "locationId": 4,
+      "latitude": 53.421288,
+      "longitude": 21.952898
+    },
+    {
+      "locationId": 5,
+      "latitude": 53.426892,
+      "longitude": 21.955797
+    },
+    {
+      "locationId": 6,
+      "latitude": 53.431711,
+      "longitude": 21.836963
+    },
+    {
+      "locationId": 7,
+      "latitude": 53.419927,
+      "longitude": 21.881982
+    },
+    {
+      "locationId": 8,
+      "latitude": 53.474723,
+      "longitude": 21.919253
+    },
+    {
+      "locationId": 9,
+      "latitude": 53.474656,
+      "longitude": 21.920273
+    },
+    {
+      "locationId": 10,
+      "latitude": 53.470476,
+      "longitude": 21.945493
+    }
+  ]
+}
