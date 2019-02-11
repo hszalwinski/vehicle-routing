@@ -1,6 +1,6 @@
 import abc
 
-from distance_matrix import load_distance_matrix_from_pickle_file
+from distance_matrix import DistanceMatrixManager
 
 
 class BaseSolverException(Exception):
@@ -9,7 +9,7 @@ class BaseSolverException(Exception):
 
 class BaseSolver(metaclass=abc.ABCMeta):
     def __init__(self, distance_matrix_path, routes_to_find):
-        distance_matrix = load_distance_matrix_from_pickle_file(path=distance_matrix_path)
+        distance_matrix = DistanceMatrixManager.load_distance_matrix_from_pickle_file(path=distance_matrix_path)
 
         self.destinations = distance_matrix['destination_addresses']
         self.distance_matrix = distance_matrix['matrix']

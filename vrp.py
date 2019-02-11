@@ -4,7 +4,7 @@ from algorithms.genetic import GeneticSolver, SELECTION_METHODS, RANK_SELECTION_
 from algorithms.scan_all import ScanAllSolver
 from algorithms.simulated_annealing import SimulatedAnnealingSolver, DEFAULT_TEMPERATURE_FACTOR
 from algorithms.ortools_solution import OrtoolsSolver
-from distance_matrix import create_distance_matrix
+from distance_matrix import DistanceMatrixManager
 from timer import timer
 
 ORTOOLS = 'ortools'
@@ -32,7 +32,7 @@ def distance_matrix(app_key, input_json, output_csv, output_pickle):
     Creates distance matrix files (CSV, pickle) from input JSONs using Google Distance Matrix API.
     Max matrix size: 10x10.
     """
-    create_distance_matrix(app_key, input_json, output_csv, output_pickle)  # ToDo: define schema for input data
+    DistanceMatrixManager(app_key).create_distance_matrix(input_json, output_csv, output_pickle)
 
 
 @cli.command()

@@ -7,93 +7,100 @@ from jsonschema import validate
 
 import googlemaps
 
-INPUT_DATA_SCHEMA_PATH = Path('data', 'input_data_schema.json')
 
+class DistanceMatrixManager:
+    INPUT_DATA_SCHEMA_PATH = Path('data', 'input_data_schema.json')
 
-def load_data_from_file(path):
-    # type: (str) -> dict
+    def __init__(self, app_key):
+        self.gmaps = googlemaps.Client(key=app_key)
 
-    path = Path(path)
-    with path.open('rb') as f:
-        file_content = f.read()
-        return json.loads(file_content)
+    def create_distance_matrix(self, input_json, output_csv, output_pickle=None):
+        # type: (str, str, str or None) -> None
 
+        schema = self.load_data_from_file(path=self.INPUT_DATA_SCHEMA_PATH)
+        data_dict = self.load_data_from_file(path=input_json)
+        validate(data_dict, schema)
 
-def extract_coordinates(data_dict):
-    # type: (dict) -> list[tuple]
+        coordinates = self.extract_coordinates(data_dict)
+        distance_matrix = self._compose_distance_matrix(coordinates)
+        raw_distance_matrix = self._extract_raw_distance_matrix(distance_matrix)
 
-    locations = data_dict['locations']
-    coordinates = []
-    for location in locations:
-        coordinates.append((location['latitude'], location['longitude']))
+        self.save_result_to_csv_file(path=output_csv,
+                                     header=distance_matrix['destination_addresses'],
+                                     rows=raw_distance_matrix)
 
-    return coordinates
+        if output_pickle:
+            pickle_file_content = {
+                'destination_addresses': distance_matrix['destination_addresses'],
+                'matrix': raw_distance_matrix
+            }
+            self.save_result_to_pickle_file(path=output_pickle, content=pickle_file_content)
 
+    def _compose_distance_matrix(self, coordinates):
+        # type: (list[tuple]) -> dict
+        if len(coordinates) <= 10:
+            return self.gmaps.distance_matrix(coordinates[:2], coordinates[2:],
+                                              mode='driving',
+                                              units='metric',
+                                              language='pl',
+                                              region='pl')
 
-def extract_raw_distance_matrix(distance_matrix):
-    # type: (dict) -> list
-    raw_distance_matrix = []
+    @staticmethod
+    def load_data_from_file(path):
+        # type: (str) -> dict
 
-    for row in distance_matrix['rows']:
-        raw_distance_matrix_row = []
-        for element in row['elements']:
-            raw_distance_matrix_row.append(element['distance']['value'])
-        raw_distance_matrix.append(raw_distance_matrix_row)
+        path = Path(path)
+        with path.open('rb') as f:
+            file_content = f.read()
+            return json.loads(file_content)
 
-    return raw_distance_matrix
+    @staticmethod
+    def extract_coordinates(data_dict):
+        # type: (dict) -> list[tuple]
 
+        locations = data_dict['locations']
+        coordinates = []
+        for location in locations:
+            coordinates.append((location['latitude'], location['longitude']))
 
-def save_result_to_csv_file(path, header, rows):
-    # type: (str, list, list) -> None
+        return coordinates
 
-    path = Path(path)
-    with path.open('w', newline='', encoding='UTF-8') as f:
-        csv_writer = csv.writer(f, delimiter=',')
-        csv_writer.writerow(header)
-        for row in rows:
-            csv_writer.writerow(row)
+    @staticmethod
+    def _extract_raw_distance_matrix(distance_matrix):
+        # type: (dict) -> list
+        raw_distance_matrix = []
 
+        for row in distance_matrix['rows']:
+            raw_distance_matrix_row = []
+            for element in row['elements']:
+                raw_distance_matrix_row.append(element['distance']['value'])
+            raw_distance_matrix.append(raw_distance_matrix_row)
 
-def save_result_to_pickle_file(path, content):
-    # type: (str, dict) -> None
+        return raw_distance_matrix
 
-    path = Path(path)
-    with path.open('wb') as f:
-        pickle.dump(content, f)
+    @staticmethod
+    def save_result_to_csv_file(path, header, rows):
+        # type: (str, list, list) -> None
 
+        path = Path(path)
+        with path.open('w', newline='', encoding='UTF-8') as f:
+            csv_writer = csv.writer(f, delimiter=',')
+            csv_writer.writerow(header)
+            for row in rows:
+                csv_writer.writerow(row)
 
-def load_distance_matrix_from_pickle_file(path):
-    # type: (str) -> dict
+    @staticmethod
+    def save_result_to_pickle_file(path, content):
+        # type: (str, dict) -> None
 
-    path = Path(path)
-    with path.open('rb') as f:
-        return pickle.load(f)
+        path = Path(path)
+        with path.open('wb') as f:
+            pickle.dump(content, f)
 
+    @staticmethod
+    def load_distance_matrix_from_pickle_file(path):
+        # type: (str) -> dict
 
-def create_distance_matrix(app_key, input_json, output_csv, output_pickle=None):
-    # type: (str, str, str, str or None) -> None
-
-    schema = load_data_from_file(path=INPUT_DATA_SCHEMA_PATH)
-    data_dict = load_data_from_file(path=input_json)
-    validate(data_dict, schema)
-
-    gmaps = googlemaps.Client(key=app_key)
-
-    coordinates = extract_coordinates(data_dict)
-    distance_matrix = gmaps.distance_matrix(coordinates, coordinates,
-                                            mode='driving',
-                                            units='metric',
-                                            language='pl',
-                                            region='pl')
-    raw_distance_matrix = extract_raw_distance_matrix(distance_matrix)
-
-    save_result_to_csv_file(path=output_csv,
-                            header=distance_matrix['destination_addresses'],
-                            rows=raw_distance_matrix)
-
-    if output_pickle:
-        pickle_file_content = {
-            'destination_addresses': distance_matrix['destination_addresses'],
-            'matrix': raw_distance_matrix
-        }
-        save_result_to_pickle_file(path=output_pickle, content=pickle_file_content)
+        path = Path(path)
+        with path.open('rb') as f:
+            return pickle.load(f)
