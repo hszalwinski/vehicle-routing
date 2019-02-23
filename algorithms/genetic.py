@@ -28,8 +28,7 @@ class GeneticSolver(BaseSolver):
             population_with_costs = zip(population, population_costs)
             selected_sequences = self._perform_selection(population_with_costs)
 
-    def _generate_initial_population(self):
-        # type: () -> list
+    def _generate_initial_population(self) -> list:
         basic_sequence = list(range(1, len(self.destinations)))
         population = [basic_sequence] * self._population_size
 
@@ -38,18 +37,14 @@ class GeneticSolver(BaseSolver):
 
         return population
 
-    def _get_population_costs(self, population):
-        # type: (list) -> list
-
+    def _get_population_costs(self, population: list) -> list:
         population_costs = []
         for sequence in population:
             population_costs.append(self._get_sequence_cost(sequence))
 
         return population_costs
 
-    def _rank_selection(self, population_with_costs):
-        # type: (list) -> list
-
+    def _rank_selection(self, population_with_costs: list) -> list:
         def get_cost(sequence):
             return sequence[1]
 
@@ -61,9 +56,7 @@ class GeneticSolver(BaseSolver):
         return selected_sequences
 
     @staticmethod
-    def _roulette_selection(population, population_costs):
-        # type: (list, list) -> list
-
+    def _roulette_selection(population: list, population_costs: list) -> list:
         pass
 
     def _pmx_crossing(self):

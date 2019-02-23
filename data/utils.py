@@ -33,9 +33,7 @@ def get_new_data_dict():
     }
 
 
-def create_new_format_json(old_format_file_path, new_format_file_path):
-    # type: (Path, Path) -> None
-
+def create_new_format_json(old_format_file_path: Path, new_format_file_path: Path) -> None:
     data_dict = loads(old_format_file_path.read_bytes())
     new_data_dict = get_new_data_dict()
 
@@ -52,9 +50,7 @@ def create_new_format_json(old_format_file_path, new_format_file_path):
     new_format_file_path.write_text(dumps(new_data_dict))
 
 
-def create_n_locations_example_json(all_data_dict, n):
-    # type: (dict, int) -> None
-
+def create_n_locations_example_json(all_data_dict: dict, n: int) -> None:
     new_data_dict = get_new_data_dict()
     new_data_dict['locations'] = all_data_dict['locations'][:n]
     Path('data', 'input', f'e{n}.json').write_text(dumps(new_data_dict))
