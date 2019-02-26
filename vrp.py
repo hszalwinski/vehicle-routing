@@ -5,7 +5,7 @@ from algorithms.scan_all import ScanAllSolver
 from algorithms.simulated_annealing import SimulatedAnnealingSolver, DEFAULT_TEMPERATURE_FACTOR
 from algorithms.ortools_solution import OrtoolsSolver
 from distance_matrix import DistanceMatrixManager
-from timer import timer
+from tools.timer import timer
 
 ORTOOLS = 'ortools'
 SIMULATED_ANNEALING = 'simulated_annealing'

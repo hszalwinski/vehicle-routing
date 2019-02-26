@@ -34,16 +34,13 @@ class SimulatedAnnealingSolver(BaseSolver):
 
         self._print_results(self._solution, self._solution_cost)
 
-    def _generate_initial_sequence(self):
-        # type: () -> list
-
+    def _generate_initial_sequence(self) -> list:
         init_sequence = list(range(1, len(self.destinations)))
         shuffle(init_sequence)
 
         return init_sequence
 
-    def _create_new_sequence(self, sequence):
-        # type: (list) -> list
+    def _create_new_sequence(self, sequence: list) -> list:
         '''
         Change places in sequence of 2 points
         '''
@@ -57,15 +54,11 @@ class SimulatedAnnealingSolver(BaseSolver):
 
         return sequence
 
-    def calculate_probability(self, iteration_number, cost):
-        # type: (int, float) -> float
-
+    def calculate_probability(self, iteration_number: int, cost: float) -> float:
         temperature = self._calculate_temperature(iteration_number)
         probability = np.power(np.e, -1 * (cost - self._solution_cost) / temperature)
 
         return probability
 
-    def _calculate_temperature(self, iteration_number):
-        # type: (int) -> float
-
+    def _calculate_temperature(self, iteration_number: int) -> float:
         return self._temperature_factor / np.log(iteration_number + 1)

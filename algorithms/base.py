@@ -1,6 +1,7 @@
 import abc
+from typing import Union
 
-from distance_matrix import DistanceMatrixManager
+from tools.file_operations import load_from_pickle_file
 
 
 class BaseSolverException(Exception):
@@ -9,7 +10,7 @@ class BaseSolverException(Exception):
 
 class BaseSolver(metaclass=abc.ABCMeta):
     def __init__(self, distance_matrix_path, routes_to_find):
-        distance_matrix = DistanceMatrixManager.load_distance_matrix_from_pickle_file(path=distance_matrix_path)
+        distance_matrix = load_from_pickle_file(path=distance_matrix_path)
 
         self.destinations = distance_matrix['destination_addresses']
         self.distance_matrix = distance_matrix['matrix']
@@ -25,14 +26,10 @@ class BaseSolver(metaclass=abc.ABCMeta):
     def solve(self):
         pass
 
-    def _arc_cost(self, from_node, to_node):
-        # type: (int, int) -> float
-
+    def _arc_cost(self, from_node: int, to_node: int) -> float:
         return int(self.distance_matrix[from_node][to_node])
 
-    def _get_sequence_cost(self, sequence):
-        # type: (tuple or list) -> float
-
+    def _get_sequence_cost(self, sequence: Union[tuple, list]) -> float:
         sequence = self._update_sequence_with_depot_node(sequence)
         cost = 0
         for i in range(0, len(sequence) - 1):
@@ -40,9 +37,7 @@ class BaseSolver(metaclass=abc.ABCMeta):
 
         return cost
 
-    def _print_results(self, sequence, cost):
-        # type: (tuple or list, float) -> None
-
+    def _print_results(self, sequence: Union[tuple, list], cost: float) -> None:
         sequence = self._update_sequence_with_depot_node(sequence)
         route = ''
         for index in sequence:
@@ -51,9 +46,7 @@ class BaseSolver(metaclass=abc.ABCMeta):
         print(f"Total distance: {cost} meters")
 
     @staticmethod
-    def _update_sequence_with_depot_node(sequence):
-        # type: (tuple or list) -> tuple or list
-
+    def _update_sequence_with_depot_node(sequence: Union[tuple, list]) -> Union[tuple, list]:
         if type(sequence) is tuple:
             sequence = (0,) + sequence + (0,)
         else:
