@@ -1,0 +1,11 @@
+{
+  "optimization": {
+    "minimizeWaitingTime": false,
+    "minimizeVehiclesUsed": false
+  },
+  "constraints": {
+    "maxWorkTimeEnabled": true,
+    "maxRouteDistanceEnabled": true,
+    "maxRouteTimeEnabled": true
+  }
+}

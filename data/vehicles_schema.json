@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "array",
+  "minItems": 1,
+  "items": {
+    "type": "object",
+    "required": [
+      "vehicleId",
+      "maxWorkTime",
+      "maxRouteDistance",
+      "totalCapacity"
+    ],
+    "properties": {
+      "vehicleId": {
+        "type": "integer",
+        "description": "Identifier of vehicle",
+        "minimum": 0
+      },
+      "maxWorkTime": {
+        "type": "integer",
+        "description": "Daily maximum work time in seconds",
+        "examples": [
+          7200
+        ],
+        "minimum": 0
+      },
+      "maxRouteDistance": {
+        "type": "integer",
+        "description": "Maximum route distance in meters",
+        "examples": [
+          100000
+        ],
+        "minimum": 0
+      },
+      "totalCapacity": {
+        "type": "integer",
+        "description": "Vehicle capacity in kilograms",
+        "examples": [
+          1000
+        ],
+        "minimum": 0
+      }
+    }
+  }
+}

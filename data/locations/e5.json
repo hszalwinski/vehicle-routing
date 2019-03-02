@@ -1,0 +1,27 @@
+[
+  {
+    "locationId": 1,
+    "latitude": 53.424705,
+    "longitude": 22.156212
+  },
+  {
+    "locationId": 2,
+    "latitude": 53.424143,
+    "longitude": 22.153237
+  },
+  {
+    "locationId": 3,
+    "latitude": 53.43162,
+    "longitude": 21.949358
+  },
+  {
+    "locationId": 4,
+    "latitude": 53.4258,
+    "longitude": 21.986048
+  },
+  {
+    "locationId": 5,
+    "latitude": 53.41383,
+    "longitude": 21.973165
+  }
+]
