@@ -29,7 +29,5 @@ class OrtoolsSolver(BaseSolver):
         else:
             print('No solution found.')
 
-    def _create_distance_callback(self):
-        # type: () -> function
-
+    def _create_distance_callback(self) -> callable:
         return self._arc_cost
