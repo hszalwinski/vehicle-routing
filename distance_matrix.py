@@ -9,7 +9,7 @@ import googlemaps
 
 
 class DistanceMatrixManager:
-    INPUT_DATA_SCHEMA_PATH = Path('data', 'input_data_schema.json')
+    INPUT_DATA_SCHEMA_PATH = Path('data', 'locations_schema.json')
 
     def __init__(self, app_key):
         self.gmaps = googlemaps.Client(key=app_key)
@@ -55,10 +55,9 @@ class DistanceMatrixManager:
             return json.loads(file_content)
 
     @staticmethod
-    def extract_coordinates(data_dict):
-        # type: (dict) -> list[tuple]
+    def extract_coordinates(locations):
+        # type: (list) -> list[tuple]
 
-        locations = data_dict['locations']
         coordinates = []
         for location in locations:
             coordinates.append((location['latitude'], location['longitude']))
