@@ -1,17 +1,11 @@
 import click
 
-from algorithms.genetic import GeneticSolver, SELECTION_METHODS, RANK_SELECTION_METHOD
+from algorithms.genetic import GeneticSolver, SELECTION_METHODS, CROSSING_METHODS
 from algorithms.scan_all import ScanAllSolver
-from algorithms.simulated_annealing import SimulatedAnnealingSolver, DEFAULT_TEMPERATURE_FACTOR
+from algorithms.simulated_annealing import SimulatedAnnealingSolver
 from algorithms.ortools_solution import OrtoolsSolver
-from distance_matrix import DistanceMatrixManager
+from tools.distance_matrix import DistanceMatrixManager
 from tools.timer import timer
-
-ORTOOLS = 'ortools'
-SIMULATED_ANNEALING = 'simulated_annealing'
-GENETIC = 'genetic'
-SCAN_ALL = 'scan_all'
-TSP_ALGORITHMS = (ORTOOLS, SIMULATED_ANNEALING, GENETIC, SCAN_ALL)
 
 
 @click.group()
@@ -24,52 +18,79 @@ def cli():
 
 @cli.command()
 @click.option('--app-key', '-a', envvar='APP_KEY', type=click.STRING, required=True)
-@click.option('--input-json', '-i', type=click.Path(exists=True, readable=True, resolve_path=True), required=True)
+@click.option('--locations-json', '-i', type=click.Path(exists=True, readable=True, resolve_path=True), required=True)
 @click.option('--output-csv', '-oc', type=click.Path(writable=True, resolve_path=True), required=True)
 @click.option('--output-pickle', '-op', type=click.Path(writable=True, resolve_path=True))
-def distance_matrix(app_key, input_json, output_csv, output_pickle):
+def distance_matrix(app_key, locations_json, output_csv, output_pickle):
     """
     Creates distance matrix files (CSV, pickle) from input JSONs using Google Distance Matrix API.
-    Max matrix size: 10x10.
     """
-    DistanceMatrixManager(app_key).create_distance_matrix(input_json, output_csv, output_pickle)
+    DistanceMatrixManager(app_key).create_distance_matrix(locations_json, output_csv, output_pickle)
 
 
 @cli.command()
 @click.option('--distance-matrix', '-d', type=click.Path(), required=True)
-@click.option('--algorithm', '-a', type=click.Choice(TSP_ALGORITHMS, case_sensitive=False),
-              show_default=True, default=ORTOOLS)
-@click.option('--iterations', '-i', type=click.IntRange(min=1, max=1_000_000_000), show_default=True, default=1_000)
-@click.option('--temperature-factor', '-t', type=click.IntRange(min=1, max=1_000), required=False, show_default=True,
-              default=DEFAULT_TEMPERATURE_FACTOR)
-@click.option('--population-size', '-p', type=click.IntRange(min=5, max=1_000), show_default=True, default=100)
-@click.option('--selection-method', '-s', type=click.Choice(SELECTION_METHODS, case_sensitive=False),
-              show_default=True, default=RANK_SELECTION_METHOD)
+@click.option('--configuration', '-c', type=click.Path(), required=False)
+@click.option('--vehicles', '-v', type=click.Path(), required=False)
 @timer
-def tsp(distance_matrix, algorithm, iterations, temperature_factor, population_size, selection_method):
+def scan_all(distance_matrix, configuration, vehicles):
     """
-    Solves a Travelling Salesman Problem represented by distance matrix.
+    Solves VRP scanning all results.
     """
-    if algorithm == ORTOOLS:
-        solver = OrtoolsSolver(distance_matrix, routes_to_find=1)
-    elif algorithm == SIMULATED_ANNEALING:
-        solver = SimulatedAnnealingSolver(distance_matrix,
-                                          routes_to_find=1,
-                                          temperature_factor=temperature_factor,
-                                          iterations_count=iterations)
-    elif algorithm == GENETIC:
-        solver = GeneticSolver(distance_matrix,
-                               routes_to_find=1,
-                               population_size=population_size,
-                               iterations_count=iterations,
-                               selection_method=selection_method)
-    elif algorithm == SCAN_ALL:
-        solver = ScanAllSolver(distance_matrix, routes_to_find=1)
-    else:
-        click.echo('Algorithm not supported.')
-        return
+    ScanAllSolver(distance_matrix, configuration, vehicles).solve()
 
-    solver.solve()
+
+@cli.command()
+@click.option('--distance-matrix', '-d', type=click.Path(), required=True)
+@click.option('--configuration', '-c', type=click.Path(), required=False)
+@click.option('--vehicles', '-v', type=click.Path(), required=False)
+@timer
+def ortools(distance_matrix, configuration, vehicles):
+    """
+    Solves VRP using Google ORTools algorithms.
+    """
+    OrtoolsSolver(distance_matrix, configuration, vehicles).solve()
+
+
+@cli.command()
+@click.option('--distance-matrix', '-d', type=click.Path(), required=True)
+@click.option('--configuration', '-c', type=click.Path(), required=False)
+@click.option('--vehicles', '-v', type=click.Path(), required=False)
+@click.option('--iterations', '-i', type=click.IntRange(min=1, max=1_000_000_000), show_default=True,
+              default=SimulatedAnnealingSolver.DEFAULT_ITERATIONS_COUNT)
+@click.option('--temperature-factor', '-t', type=click.IntRange(min=1, max=1_000), required=False, show_default=True,
+              default=SimulatedAnnealingSolver.DEFAULT_TEMPERATURE_FACTOR)
+@timer
+def simulated_annealing(distance_matrix, configuration, vehicles, iterations, temperature_factor):
+    """
+    Solves VRP using simulated annealing.
+    """
+    SimulatedAnnealingSolver(distance_matrix, configuration, vehicles,
+                             iterations_count=iterations,
+                             temperature_factor=temperature_factor).solve()
+
+
+@cli.command()
+@click.option('--distance-matrix', '-d', type=click.Path(), required=True)
+@click.option('--configuration', '-c', type=click.Path(), required=False)
+@click.option('--vehicles', '-v', type=click.Path(), required=False)
+@click.option('--iterations', '-i', type=click.IntRange(min=1, max=1_000_000_000), show_default=True,
+              default=GeneticSolver.DEFAULT_ITERATIONS_COUNT)
+@click.option('--population-size', '-p', type=click.IntRange(min=5, max=1_000), show_default=True,
+              default=GeneticSolver.DEFAULT_POPULATION_SIZE)
+@click.option('--selection-method', '-s', type=click.Choice(SELECTION_METHODS, case_sensitive=False),
+              show_default=True, default=GeneticSolver.DEFAULT_SELECTION_METHOD)
+@click.option('--crossing-method', '-cm', type=click.Choice(CROSSING_METHODS, case_sensitive=False),
+              show_default=True, default=GeneticSolver.DEFAULT_CROSSING_METHOD)
+@timer
+def genetic(distance_matrix, configuration, vehicles, iterations, population_size, selection_method, crossing_method):
+    """
+    Solves VRP using genetic algorithm.
+    """
+    GeneticSolver(distance_matrix, configuration, vehicles,
+                  iterations_count=iterations,
+                  population_size=population_size,
+                  selection_method=selection_method).solve()
 
 
 if __name__ == '__main__':

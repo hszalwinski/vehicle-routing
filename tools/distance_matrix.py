@@ -4,25 +4,23 @@ from numpy import vstack, hstack, ndarray
 from typing import Union
 
 import googlemaps
-from jsonschema import validate
 
-from tools.file_operations import load_from_json_file, save_to_pickle_file, save_to_csv_file
+from tools.file_operations import load_json_and_validate, save_to_pickle_file, save_to_csv_file
 
 
 class DistanceMatrixManager:
-    INPUT_DATA_SCHEMA_PATH = Path('data', 'locations_schema.json')
+    LOCATIONS_SCHEMA_PATH = Path('data', 'locations_schema.json')
     MAX_COORDINATES_SIZE_PER_REQUEST = 10
 
     def __init__(self, app_key):
         self.gmaps = googlemaps.Client(key=app_key)
 
-    def create_distance_matrix(self, input_json: str, output_csv_path: str, output_pickle_path: str = None) -> None:
+    def create_distance_matrix(self, locations_json_path: str, output_csv_path: str,
+                               output_pickle_path: str = None) -> None:
 
-        schema = load_from_json_file(path=self.INPUT_DATA_SCHEMA_PATH)
-        data_dict = load_from_json_file(path=input_json)
-        validate(data_dict, schema)
+        locations = load_json_and_validate(schema_path=self.LOCATIONS_SCHEMA_PATH, file_path=locations_json_path)
+        coordinates = self._extract_coordinates(locations)
 
-        coordinates = self._extract_coordinates(data_dict)
         distance_matrix, destination_addresses = self._compose_distance_matrix(coordinates)
 
         save_to_csv_file(path=output_csv_path, header=destination_addresses, rows=distance_matrix)
