@@ -25,9 +25,7 @@ class DistanceMatrixManager:
         coordinates = self._extract_coordinates(data_dict)
         distance_matrix, destination_addresses = self._compose_distance_matrix(coordinates)
 
-        save_to_csv_file(path=output_csv_path,
-                         header=destination_addresses,
-                         rows=distance_matrix)
+        save_to_csv_file(path=output_csv_path, header=destination_addresses, rows=distance_matrix)
 
         if output_pickle_path:
             pickle_file_content = {
@@ -37,8 +35,7 @@ class DistanceMatrixManager:
             save_to_pickle_file(path=output_pickle_path, content=pickle_file_content)
 
     @staticmethod
-    def _extract_coordinates(data: dict) -> list:
-        locations = data['locations']
+    def _extract_coordinates(locations: list) -> list:
         coordinates = []
         for location in locations:
             coordinates.append((location['latitude'], location['longitude']))
