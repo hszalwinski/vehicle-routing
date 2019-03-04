@@ -5,12 +5,13 @@ from copy import deepcopy
 
 from algorithms.base import BaseSolver
 
-DEFAULT_TEMPERATURE_FACTOR = 100
-
 
 class SimulatedAnnealingSolver(BaseSolver):
-    def __init__(self, distance_matrix_path, routes_to_find, temperature_factor, iterations_count):
-        super(SimulatedAnnealingSolver, self).__init__(distance_matrix_path, routes_to_find)
+    DEFAULT_TEMPERATURE_FACTOR = 100
+    DEFAULT_ITERATIONS_COUNT = 1_000
+
+    def __init__(self, distance_matrix_path, configuration, vehicles, temperature_factor, iterations_count):
+        super(SimulatedAnnealingSolver, self).__init__(distance_matrix_path, configuration, vehicles)
         self._solution = self._generate_initial_sequence()
         self._solution_cost = self._get_sequence_cost(self._solution)
         self._temperature_factor = temperature_factor

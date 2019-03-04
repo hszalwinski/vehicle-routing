@@ -7,17 +7,22 @@ ROULETTE_SELECTION_METHOD = 'roulette'
 SELECTION_METHODS = (RANK_SELECTION_METHOD, ROULETTE_SELECTION_METHOD)
 
 PMX_CROSSING = 'pmx'
-
-CROSSING_METHODS = ()
+CROSSING_METHODS = (PMX_CROSSING,)
 
 
 class GeneticSolver(BaseSolver):
-    def __init__(self, distance_matrix_path, routes_to_find, population_size, iterations_count, selection_method):
-        super(GeneticSolver, self).__init__(distance_matrix_path, routes_to_find)
+    DEFAULT_ITERATIONS_COUNT = 1_000
+    DEFAULT_POPULATION_SIZE = 100
+    DEFAULT_SELECTION_METHOD = RANK_SELECTION_METHOD
+    DEFAULT_CROSSING_METHOD = PMX_CROSSING
+
+    def __init__(self, distance_matrix_path, configuration, vehicles, population_size, iterations_count,
+                 selection_method):
+        super(GeneticSolver, self).__init__(distance_matrix_path, configuration, vehicles)
         self._population_size = population_size
         self._iterations_count = iterations_count
-        self._perform_selection = self._rank_selection \
-            if selection_method == RANK_SELECTION_METHOD else self._roulette_selection
+        self._perform_selection = self._rank_selection if selection_method == RANK_SELECTION_METHOD \
+            else self._roulette_selection
         self._perform_crossing = self._pmx_crossing
 
     def solve(self):

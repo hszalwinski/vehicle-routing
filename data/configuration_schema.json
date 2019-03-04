@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["optimization", "constraints"],
+  "properties": {
+    "optimization": {
+      "type": "object",
+      "required": [
+        "minimizeWaitingTime",
+        "minimizeVehiclesUsed"
+      ],
+      "properties": {
+        "minimizeWaitingTime": {
+          "type": "boolean"
+        },
+        "minimizeVehiclesUsed": {
+          "type": "boolean"
+        }
+      }
+    },
+    "constraints": {
+      "type": "object",
+      "required": [
+        "maxWorkTimeEnabled",
+        "maxRouteDistanceEnabled",
+        "maxRouteTimeEnabled"
+      ],
+      "properties": {
+        "maxWorkTimeEnabled": {
+          "type": "boolean"
+        },
+        "maxRouteDistanceEnabled": {
+          "type": "boolean"
+        },
+        "maxRouteTimeEnabled": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

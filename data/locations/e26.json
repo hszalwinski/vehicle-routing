@@ -1,0 +1,132 @@
+[
+  {
+    "locationId": 1,
+    "latitude": 53.424705,
+    "longitude": 22.156212
+  },
+  {
+    "locationId": 2,
+    "latitude": 53.424143,
+    "longitude": 22.153237
+  },
+  {
+    "locationId": 3,
+    "latitude": 53.43162,
+    "longitude": 21.949358
+  },
+  {
+    "locationId": 4,
+    "latitude": 53.4258,
+    "longitude": 21.986048
+  },
+  {
+    "locationId": 5,
+    "latitude": 53.41383,
+    "longitude": 21.973165
+  },
+  {
+    "locationId": 6,
+    "latitude": 53.413958,
+    "longitude": 22.024445
+  },
+  {
+    "locationId": 7,
+    "latitude": 53.414741,
+    "longitude": 22.032401
+  },
+  {
+    "locationId": 8,
+    "latitude": 53.409482,
+    "longitude": 22.0076
+  },
+  {
+    "locationId": 9,
+    "latitude": 53.420958,
+    "longitude": 21.881797
+  },
+  {
+    "locationId": 10,
+    "latitude": 53.410662,
+    "longitude": 21.857892
+  },
+  {
+    "locationId": 11,
+    "latitude": 53.427092,
+    "longitude": 21.886648
+  },
+  {
+    "locationId": 12,
+    "latitude": 53.4103,
+    "longitude": 21.856967
+  },
+  {
+    "locationId": 13,
+    "latitude": 53.493863,
+    "longitude": 21.914015
+  },
+  {
+    "locationId": 14,
+    "latitude": 53.453068,
+    "longitude": 21.915366
+  },
+  {
+    "locationId": 15,
+    "latitude": 53.470261,
+    "longitude": 21.944873
+  },
+  {
+    "locationId": 16,
+    "latitude": 53.501463,
+    "longitude": 21.922863
+  },
+  {
+    "locationId": 17,
+    "latitude": 53.493436,
+    "longitude": 21.915326
+  },
+  {
+    "locationId": 18,
+    "latitude": 53.492125,
+    "longitude": 21.915365
+  },
+  {
+    "locationId": 19,
+    "latitude": 53.492115,
+    "longitude": 21.982932
+  },
+  {
+    "locationId": 20,
+    "latitude": 53.367421,
+    "longitude": 21.976325
+  },
+  {
+    "locationId": 21,
+    "latitude": 53.362933,
+    "longitude": 21.974458
+  },
+  {
+    "locationId": 22,
+    "latitude": 53.352263,
+    "longitude": 21.916395
+  },
+  {
+    "locationId": 23,
+    "latitude": 53.341245,
+    "longitude": 21.93036
+  },
+  {
+    "locationId": 24,
+    "latitude": 53.350518,
+    "longitude": 21.879776
+  },
+  {
+    "locationId": 25,
+    "latitude": 53.351227,
+    "longitude": 21.922323
+  },
+  {
+    "locationId": 26,
+    "latitude": 53.354317,
+    "longitude": 21.916068
+  }
+]

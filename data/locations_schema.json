@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "array",
+  "description": "List of locations - depot is the first one on the list",
+  "items": {
+    "type": "object",
+    "required": [
+      "locationId",
+      "latitude",
+      "longitude"
+    ],
+    "properties": {
+      "locationId": {
+        "type": "integer",
+        "description": "Identifier of a location",
+        "minimum": 0
+      },
+      "latitude": {
+        "type": "number",
+        "examples": [
+          53.42389
+        ]
+      },
+      "longitude": {
+        "type": "number",
+        "examples": [
+          22.160233
+        ]
+      }
+    }
+  }
+}

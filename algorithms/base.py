@@ -1,7 +1,8 @@
 import abc
 from typing import Union
+from pathlib import Path
 
-from tools.file_operations import load_from_pickle_file
+from tools.file_operations import load_from_pickle_file, load_json_and_validate
 
 
 class BaseSolverException(Exception):
@@ -9,7 +10,10 @@ class BaseSolverException(Exception):
 
 
 class BaseSolver(metaclass=abc.ABCMeta):
-    def __init__(self, distance_matrix_path, routes_to_find):
+    CONFIGURATION_SCHEMA_PATH = Path('data', 'configuration_schema.json')
+    VEHICLES_SCHEMA_PATH = Path('data', 'vehicles_schema.json')
+
+    def __init__(self, distance_matrix_path, configuration_path, vehicles_path):
         distance_matrix = load_from_pickle_file(path=distance_matrix_path)
 
         self.destinations = distance_matrix['destination_addresses']
@@ -20,7 +24,10 @@ class BaseSolver(metaclass=abc.ABCMeta):
         if (self.distance_matrix_size < 2) or (self.destinations_count < 2):
             raise BaseSolverException('Please provide at least 2 destinations in distance matrix.')
 
-        self.routes_to_find = routes_to_find
+        self.configuration = load_json_and_validate(schema_path=self.CONFIGURATION_SCHEMA_PATH,
+                                                    file_path=configuration_path)
+        self.vehicles = load_json_and_validate(schema_path=self.VEHICLES_SCHEMA_PATH,
+                                               file_path=vehicles_path)
 
     @abc.abstractmethod
     def solve(self):

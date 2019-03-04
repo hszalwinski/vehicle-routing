@@ -6,8 +6,8 @@ import itertools
 
 
 class ScanAllSolver(BaseSolver):
-    def __init__(self, distance_matrix_path, routes_to_find=1):
-        super(ScanAllSolver, self).__init__(distance_matrix_path, routes_to_find)
+    def __init__(self, distance_matrix_path, configuration, vehicles):
+        super(ScanAllSolver, self).__init__(distance_matrix_path, configuration, vehicles)
 
     def solve(self):
         destination_ids = range(1, self.destinations_count)

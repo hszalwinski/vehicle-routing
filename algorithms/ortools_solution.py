@@ -4,13 +4,13 @@ from algorithms.base import BaseSolver
 
 
 class OrtoolsSolver(BaseSolver):
-    def __init__(self, distance_matrix_path, routes_to_find):
-        super(OrtoolsSolver, self).__init__(distance_matrix_path, routes_to_find)
+    def __init__(self, distance_matrix_path, configuration, vehicles):
+        super(OrtoolsSolver, self).__init__(distance_matrix_path, configuration, vehicles)
         self.distance_callback = self._create_distance_callback()
         self.depot = 0
 
     def solve(self):
-        routing = pywrapcp.RoutingModel(self.destinations_count, self.routes_to_find, self.depot)
+        routing = pywrapcp.RoutingModel(self.destinations_count, len(self.vehicles), self.depot)
         search_parameters = pywrapcp.RoutingModel.DefaultSearchParameters()
         routing.SetArcCostEvaluatorOfAllVehicles(self.distance_callback)
         assignment = routing.SolveWithParameters(search_parameters)

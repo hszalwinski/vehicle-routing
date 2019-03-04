@@ -1,0 +1,8 @@
+[
+  {
+    "vehicleId": 1,
+    "maxWorkTime": 600,
+    "maxRouteDistance": 400,
+    "totalCapacity": 17300
+  }
+]
