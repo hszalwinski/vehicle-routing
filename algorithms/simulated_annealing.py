@@ -1,5 +1,6 @@
 import numpy as np
 
+from typing import List
 from random import shuffle, random, randint
 from copy import deepcopy
 
@@ -10,10 +11,12 @@ class SimulatedAnnealingSolver(BaseSolver):
     DEFAULT_TEMPERATURE_FACTOR = 100
     DEFAULT_ITERATIONS_COUNT = 1_000
 
-    def __init__(self, distance_matrix_path, configuration, vehicles, temperature_factor, iterations_count):
-        super(SimulatedAnnealingSolver, self).__init__(distance_matrix_path, configuration, vehicles)
+    def __init__(self, distance_matrix_path: str, configuration_path: str, vehicles_path: str,
+                 iterations_count: int, temperature_factor: int):
+        super(SimulatedAnnealingSolver, self).__init__(distance_matrix_path, configuration_path, vehicles_path)
         self._solution = self._generate_initial_sequence()
         self._solution_cost = self._get_sequence_cost(self._solution)
+        self._sequence_max_index = len(self._solution) - 1
         self._temperature_factor = temperature_factor
         self._iterations_count = iterations_count
 
@@ -35,18 +38,18 @@ class SimulatedAnnealingSolver(BaseSolver):
 
         self._print_results(self._solution, self._solution_cost)
 
-    def _generate_initial_sequence(self) -> list:
+    def _generate_initial_sequence(self) -> List[int]:
         init_sequence = list(range(1, len(self.destinations)))
         shuffle(init_sequence)
 
         return init_sequence
 
-    def _create_new_sequence(self, sequence: list) -> list:
-        '''
-        Change places in sequence of 2 points
-        '''
-        index_a = randint(0, len(sequence) - 1)
-        index_b = randint(0, len(sequence) - 1)
+    def _create_new_sequence(self, sequence: List[int]) -> List[int]:
+        """
+        Changes 2 points place in a sequence
+        """
+        index_a = randint(0, self._sequence_max_index)
+        index_b = randint(0, self._sequence_max_index)
 
         if index_a != index_b:
             sequence[index_a], sequence[index_b] = sequence[index_b], sequence[index_a]

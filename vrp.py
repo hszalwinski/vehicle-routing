@@ -78,9 +78,9 @@ def simulated_annealing(distance_matrix, configuration, vehicles, iterations, te
               default=GeneticSolver.DEFAULT_ITERATIONS_COUNT)
 @click.option('--population-size', '-p', type=click.IntRange(min=5, max=1_000), show_default=True,
               default=GeneticSolver.DEFAULT_POPULATION_SIZE)
-@click.option('--selection-method', '-s', type=click.Choice(SELECTION_METHODS, case_sensitive=False),
+@click.option('--selection-method', '-s', type=click.Choice(SELECTION_METHODS, case_sensitive=False),  # type: ignore
               show_default=True, default=GeneticSolver.DEFAULT_SELECTION_METHOD)
-@click.option('--crossing-method', '-cm', type=click.Choice(CROSSING_METHODS, case_sensitive=False),
+@click.option('--crossing-method', '-cm', type=click.Choice(CROSSING_METHODS, case_sensitive=False),  # type: ignore
               show_default=True, default=GeneticSolver.DEFAULT_CROSSING_METHOD)
 @timer
 def genetic(distance_matrix, configuration, vehicles, iterations, population_size, selection_method, crossing_method):
@@ -90,7 +90,8 @@ def genetic(distance_matrix, configuration, vehicles, iterations, population_siz
     GeneticSolver(distance_matrix, configuration, vehicles,
                   iterations_count=iterations,
                   population_size=population_size,
-                  selection_method=selection_method).solve()
+                  selection_method=selection_method,
+                  crossing_method=crossing_method).solve()
 
 
 if __name__ == '__main__':

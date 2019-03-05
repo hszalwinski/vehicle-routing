@@ -10,7 +10,8 @@ at the moment works only with 64 bit Python installation. Furthermore, on Window
 At first, install pipenv package:
 https://pipenv.readthedocs.io/en/latest/install/#installing-pipenv
 and run following command in project directory
-```
+
+```bash
 pipenv install
 ```
 
@@ -18,9 +19,17 @@ pipenv install
 
 Scripts can be ran in terminal:
 
-```
+```bash
 python vrp.py --help
 ```
 
 Available parameters as environment variables:
 - APP_KEY - application key for Google API
+
+## Static code analysis
+
+Combination of *mypy* and typehints allow to run:
+
+```bash
+mypy vrp.py
+```
