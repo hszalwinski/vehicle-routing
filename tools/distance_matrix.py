@@ -1,7 +1,7 @@
 from pathlib import Path
 from math import ceil
 from numpy import vstack, hstack, ndarray
-from typing import Union
+from typing import Union, List, Tuple, Optional
 
 import googlemaps
 
@@ -12,7 +12,7 @@ class DistanceMatrixManager:
     LOCATIONS_SCHEMA_PATH = Path('data', 'locations_schema.json')
     MAX_COORDINATES_SIZE_PER_REQUEST = 10
 
-    def __init__(self, app_key):
+    def __init__(self, app_key: str) -> None:
         self.gmaps = googlemaps.Client(key=app_key)
 
     def create_distance_matrix(self, locations_json_path: str, output_csv_path: str,
@@ -33,28 +33,27 @@ class DistanceMatrixManager:
             save_to_pickle_file(path=output_pickle_path, content=pickle_file_content)
 
     @staticmethod
-    def _extract_coordinates(locations: list) -> list:
+    def _extract_coordinates(locations: List[dict]) -> list:
         coordinates = []
         for location in locations:
             coordinates.append((location['latitude'], location['longitude']))
 
         return coordinates
 
-    def _compose_distance_matrix(self, coordinates: list) -> (Union[list, ndarray], list):
+    def _compose_distance_matrix(self, coordinates: list) -> Tuple[Union[list, ndarray], list]:
         """
         In a simple case it just returns a result of Google Distance Matrix API call.
         The API has a limit - returning matrix of maximum size 10x10.
         For more than 10 destinations, this method performs multiple API calls and combines results into one matrix.
 
-        :param coordinates:
         :return: Distance matrix and a list of destination addresses.
         """
         if len(coordinates) <= 10:
             return self._get_distance_matrix_from_gmaps(origins=coordinates, destinations=coordinates)
 
         distance_matrix = None
-        destinations_addresses = []
-        addresses_part = []
+        destinations_addresses: List[str] = []
+        addresses_part: List[str] = []
 
         parts_count = ceil(len(coordinates) / self.MAX_COORDINATES_SIZE_PER_REQUEST)
         for d in range(0, parts_count):
@@ -76,7 +75,7 @@ class DistanceMatrixManager:
 
         return coordinates[coordinates_from:coordinates_to]
 
-    def _get_distance_matrix_from_gmaps(self, origins: list, destinations: list) -> (Union[list, ndarray], list):
+    def _get_distance_matrix_from_gmaps(self, origins: list, destinations: list) -> Tuple[Union[list, ndarray], list]:
         distance_matrix_response = self.gmaps.distance_matrix(origins, destinations,
                                                               mode='driving',
                                                               units='metric',
@@ -100,7 +99,7 @@ class DistanceMatrixManager:
         return raw_distance_matrix
 
     @staticmethod
-    def _stack_matrixes(base_matrix: Union[None, ndarray],
+    def _stack_matrixes(base_matrix: Optional[ndarray],
                         new_matrix: Union[list, ndarray],
                         stack_function: Union[vstack, hstack]) -> ndarray:
         if base_matrix is None:
