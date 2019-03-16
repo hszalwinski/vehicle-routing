@@ -9,16 +9,17 @@ class GeneticSolver(BaseSolver):
     DEFAULT_POPULATION_SIZE = 100
     DEFAULT_MUTATED_RATIO = 0.1
     TOURNAMENT_GROUP_SIZE = 3
+    DEFAULT_PMX_CROSSING_RATIO = 0.4
 
     def __init__(self, distance_matrix_path: str, configuration_path: str, vehicles_path: str,
                  population_size: int, iterations_count: int):
         super(GeneticSolver, self).__init__(distance_matrix_path, configuration_path, vehicles_path)
         self._population_size = population_size
-        self._sequence_max_index = None
         self._iterations_count = iterations_count
         self._elite_count = 5
         self._groups_count = int(self._population_size / self.TOURNAMENT_GROUP_SIZE)
         self._mutated_sequences_per_population = int(self._population_size * self.DEFAULT_MUTATED_RATIO)
+        self._pmx_crosing_size = int(self.sequence_max_index * self.DEFAULT_PMX_CROSSING_RATIO)
 
     def solve(self):
         population = self._generate_initial_population()
@@ -27,7 +28,7 @@ class GeneticSolver(BaseSolver):
         for i in range(0, self._iterations_count):
             selected_population = self._perform_selection(population_with_costs)
             crossed_population = self._perform_crossing(selected_population)
-            mutated_population = self._mutate_population(selected_sequences)
+            mutated_population = self._mutate_population(crossed_population)
 
     def _generate_initial_population(self) -> List[List[int]]:
         basic_sequence = list(range(1, len(self.destinations)))
@@ -69,6 +70,13 @@ class GeneticSolver(BaseSolver):
                 if len(selected_sequences) == self._population_size:
                     return selected_sequences
 
+    def _perform_crossing(self, selected_population: List[List[int]]) -> List[List[int]]:
+        start_index = randint(0, self.sequence_max_index - self._pmx_crosing_size)
+        end_index = start_index + self._pmx_crosing_size
+        shuffle(selected_population)
+
+        pass
+
     def _mutate_population(self, population: List[List[int]]) -> List[List[int]]:
         sequence_ids_to_mutate = [
             randint(0, self._population_size) for i in range(0, self._mutated_sequences_per_population)
@@ -77,10 +85,6 @@ class GeneticSolver(BaseSolver):
             population[sequence_id] = self._mutate_by_inversion(population[sequence_id])
 
         return population
-
-    def _perform_crossing(self, selected_population: List[int]) -> List[int]:
-        start_index =
-        pass
 
     def _mutate_by_inversion(self, sequence: List[int]) -> List[int]:
         index_a = randint(0, self.sequence_max_index)
