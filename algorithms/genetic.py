@@ -26,6 +26,7 @@ class GeneticSolver(BaseSolver):
         self._iterations_count = iterations_count
         self._elite_count = 5
         self._perform_crossing = self._pmx_crossing if crossing_method == PMX_CROSSING else self._other_crossing
+        self._groups_count = int(self._population_size / self.TOURNAMENT_GROUP_SIZE)
 
     def solve(self):
         population = self._generate_initial_population()
@@ -33,6 +34,7 @@ class GeneticSolver(BaseSolver):
 
         for i in range(0, self._iterations_count):
             selected_sequences = self._perform_selection(population_with_costs)
+            mutated_population = self._mutate_population(selected_sequences)
 
     def _generate_initial_population(self) -> List[List[int]]:
         basic_sequence = list(range(1, len(self.destinations)))
@@ -55,7 +57,7 @@ class GeneticSolver(BaseSolver):
     def _perform_selection(self, population_with_costs: List[Tuple[float, List[int]]]) -> List[List[int]]:
         selected_sequences = [] if self._elite_count == 0 else self._select_elites(population_with_costs)
 
-        selected_sequences = self._tournament_selection(selected_sequences, population_with_costs)
+        return self._tournament_selection(selected_sequences, population_with_costs)
 
     def _select_elites(self, population_with_costs: List[Tuple[float, List[int]]]) -> List[List[int]]:
         sorted_population = sorted(population_with_costs)
@@ -65,20 +67,14 @@ class GeneticSolver(BaseSolver):
 
     def _tournament_selection(self, selected_sequences: List[List[int]],
                               population_with_costs: List[Tuple[float, List[int]]]) -> List[List[int]]:
-        groups_count = int(self._population_size / self.TOURNAMENT_GROUP_SIZE)
-
-        while len(selected_sequences) != self._population_size:
+        while True:
             shuffle(population_with_costs)
-            tournament_groups = [population_with_costs[i::groups_count] for i in range(groups_count)]
+            tournament_groups = [population_with_costs[i::self._groups_count] for i in range(self._groups_count)]
             for group in tournament_groups:
                 best_sequence_in_group = sorted(group)[0]
                 selected_sequences.append(best_sequence_in_group)
+                if len(selected_sequences) == self._population_size:
+                    return selected_sequences
 
-    def _pmx_crossing(self):
-        pass
-
-    def _other_crossing(self):
-        pass
-
-    def _mutation(self):
+    def _mutate_population(self):
         pass
