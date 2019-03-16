@@ -1,6 +1,6 @@
 import click
 
-from algorithms.genetic import GeneticSolver, SELECTION_METHODS, CROSSING_METHODS
+from algorithms.genetic import GeneticSolver
 from algorithms.scan_all import ScanAllSolver
 from algorithms.simulated_annealing import SimulatedAnnealingSolver
 from algorithms.ortools_solution import OrtoolsSolver
@@ -78,20 +78,14 @@ def simulated_annealing(distance_matrix, configuration, vehicles, iterations, te
               default=GeneticSolver.DEFAULT_ITERATIONS_COUNT)
 @click.option('--population-size', '-p', type=click.IntRange(min=5, max=1_000), show_default=True,
               default=GeneticSolver.DEFAULT_POPULATION_SIZE)
-@click.option('--selection-method', '-s', type=click.Choice(SELECTION_METHODS, case_sensitive=False),  # type: ignore
-              show_default=True, default=GeneticSolver.DEFAULT_SELECTION_METHOD)
-@click.option('--crossing-method', '-cm', type=click.Choice(CROSSING_METHODS, case_sensitive=False),  # type: ignore
-              show_default=True, default=GeneticSolver.DEFAULT_CROSSING_METHOD)
 @timer
-def genetic(distance_matrix, configuration, vehicles, iterations, population_size, selection_method, crossing_method):
+def genetic(distance_matrix, configuration, vehicles, iterations, population_size):
     """
     Solves VRP using genetic algorithm.
     """
     GeneticSolver(distance_matrix, configuration, vehicles,
                   iterations_count=iterations,
-                  population_size=population_size,
-                  selection_method=selection_method,
-                  crossing_method=crossing_method).solve()
+                  population_size=population_size).solve()
 
 
 if __name__ == '__main__':

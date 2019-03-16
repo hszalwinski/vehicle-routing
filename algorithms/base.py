@@ -17,9 +17,10 @@ class BaseSolver(metaclass=abc.ABCMeta):
         distance_matrix = load_from_pickle_file(path=distance_matrix_path)
 
         self.destinations = distance_matrix['destination_addresses']
-        self.distance_matrix = distance_matrix['matrix']
-
         self.destinations_count = len(self.destinations)
+        self.sequence_max_index = self.destinations_count - 2
+
+        self.distance_matrix = distance_matrix['matrix']
         self.distance_matrix_size = len(self.distance_matrix)
         if (self.distance_matrix_size < 2) or (self.destinations_count < 2):
             raise BaseSolverException('Please provide at least 2 destinations in distance matrix.')

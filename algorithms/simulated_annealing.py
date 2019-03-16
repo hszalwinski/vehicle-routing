@@ -16,7 +16,6 @@ class SimulatedAnnealingSolver(BaseSolver):
         super(SimulatedAnnealingSolver, self).__init__(distance_matrix_path, configuration_path, vehicles_path)
         self._solution = self._generate_initial_sequence()
         self._solution_cost = self._get_sequence_cost(self._solution)
-        self._sequence_max_index = len(self._solution) - 1
         self._temperature_factor = temperature_factor
         self._iterations_count = iterations_count
 
@@ -48,8 +47,8 @@ class SimulatedAnnealingSolver(BaseSolver):
         """
         Changes 2 points place in a sequence
         """
-        index_a = randint(0, self._sequence_max_index)
-        index_b = randint(0, self._sequence_max_index)
+        index_a = randint(0, self.sequence_max_index)
+        index_b = randint(0, self.sequence_max_index)
 
         if index_a != index_b:
             sequence[index_a], sequence[index_b] = sequence[index_b], sequence[index_a]
