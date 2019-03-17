@@ -8,14 +8,11 @@ from algorithms.base import BaseSolver
 
 
 class SimulatedAnnealingSolver(BaseSolver):
-    DEFAULT_TEMPERATURE_FACTOR = 100
-    DEFAULT_ITERATIONS_COUNT = 1_000
-
-    def __init__(self, distance_matrix_path: str, configuration_path: str, vehicles_path: str,
-                 iterations_count: int, temperature_factor: int):
+    def __init__(self, distance_matrix_path: str, configuration_path: str, vehicles_path: str):
         super(SimulatedAnnealingSolver, self).__init__(distance_matrix_path, configuration_path, vehicles_path)
-        self._temperature_factor = temperature_factor
-        self._iterations_count = iterations_count
+        conf = self.configuration['simulated_annealing']
+        self._iterations_count = conf['iterations_count']
+        self._temperature_factor = conf['temperature_factor']
 
         self._best_sequence = self._generate_initial_sequence()
         self._best_sequence_cost = self._get_sequence_cost(self._best_sequence)

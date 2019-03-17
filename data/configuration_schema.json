@@ -40,11 +40,32 @@
         }
       }
     },
+    "simulated_annealing": {
+      "type": "object",
+      "required": [
+        "iterations_count",
+        "temperature_factor"
+      ],
+      "properties": {
+        "iterations_count": {
+          "type": "integer",
+          "minimum": 100,
+          "maximum": 10000000,
+          "description": "Number of iterations."
+        },
+        "temperature_factor": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000,
+          "description": "Lowering this factor, lowers probability of accepting worse sequence."
+        }
+      }
+    },
     "genetic": {
       "type": "object",
       "required": [
-        "iterationsCount",
-        "populationSize",
+        "iterations_count",
+        "population_size",
         "elite_sequences_ratio",
         "tournament_group_size",
         "mutated_sequences_ratio",

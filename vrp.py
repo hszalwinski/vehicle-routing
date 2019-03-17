@@ -56,18 +56,12 @@ def ortools(distance_matrix, configuration, vehicles):
 @click.option('--distance-matrix', '-d', type=click.Path(), required=True)
 @click.option('--configuration', '-c', type=click.Path(), required=False)
 @click.option('--vehicles', '-v', type=click.Path(), required=False)
-@click.option('--iterations', '-i', type=click.IntRange(min=1, max=1_000_000_000), show_default=True,
-              default=SimulatedAnnealingSolver.DEFAULT_ITERATIONS_COUNT)
-@click.option('--temperature-factor', '-t', type=click.IntRange(min=1, max=1_000), required=False, show_default=True,
-              default=SimulatedAnnealingSolver.DEFAULT_TEMPERATURE_FACTOR)
 @timer
-def simulated_annealing(distance_matrix, configuration, vehicles, iterations, temperature_factor):
+def simulated_annealing(distance_matrix, configuration, vehicles):
     """
     Solves VRP using simulated annealing.
     """
-    SimulatedAnnealingSolver(distance_matrix, configuration, vehicles,
-                             iterations_count=iterations,
-                             temperature_factor=temperature_factor).solve()
+    SimulatedAnnealingSolver(distance_matrix, configuration, vehicles).solve()
 
 
 @cli.command()
