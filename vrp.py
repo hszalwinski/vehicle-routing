@@ -74,18 +74,12 @@ def simulated_annealing(distance_matrix, configuration, vehicles, iterations, te
 @click.option('--distance-matrix', '-d', type=click.Path(), required=True)
 @click.option('--configuration', '-c', type=click.Path(), required=False)
 @click.option('--vehicles', '-v', type=click.Path(), required=False)
-@click.option('--iterations', '-i', type=click.IntRange(min=1, max=1_000_000_000), show_default=True,
-              default=GeneticSolver.DEFAULT_ITERATIONS_COUNT)
-@click.option('--population-size', '-p', type=click.IntRange(min=5, max=1_000), show_default=True,
-              default=GeneticSolver.DEFAULT_POPULATION_SIZE)
 @timer
-def genetic(distance_matrix, configuration, vehicles, iterations, population_size):
+def genetic(distance_matrix, configuration, vehicles):
     """
     Solves VRP using genetic algorithm.
     """
-    GeneticSolver(distance_matrix, configuration, vehicles,
-                  iterations_count=iterations,
-                  population_size=population_size).solve()
+    GeneticSolver(distance_matrix, configuration, vehicles).solve()
 
 
 if __name__ == '__main__':

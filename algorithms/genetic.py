@@ -1,3 +1,4 @@
+from sys import maxsize as max_integer_size
 from random import sample, shuffle, randint
 from typing import List, Tuple
 
@@ -12,21 +13,23 @@ class GeneticSolver(BaseSolver):
     DEFAULT_PMX_CROSSING_RATIO = 0.4
     DEFAULT_MUTATED_RATIO = 0.1
 
-    def __init__(self, distance_matrix_path: str, configuration_path: str, vehicles_path: str,
-                 population_size: int, iterations_count: int):
+    def __init__(self, distance_matrix_path: str, configuration_path: str, vehicles_path: str):
         super(GeneticSolver, self).__init__(distance_matrix_path, configuration_path, vehicles_path)
-        self._population_size = population_size
-        self._iterations_count = iterations_count
-        self._elite_count = int(self.destinations_count * self.DEFAULT_ELITE_SEQUENCES_RATIO)
+        conf = self.configuration['genetic']
+        self._iterations_count = conf['iterations_count']
+        self._population_size = conf['population_size']
+        self._max_population_index = self._population_size - 1
+
+        self._elite_count = int(self.destinations_count * conf['elite_sequences_ratio'])
         if self._elite_count == 0:
             self._elite_count = 1
-        self._groups_count = int(self._population_size / self.DEFAULT_TOURNAMENT_GROUP_SIZE)
-        self._mutated_sequences_per_population = int(self._population_size * self.DEFAULT_MUTATED_RATIO)
-        self._pmx_crossing_size = int(self.sequence_max_index * self.DEFAULT_PMX_CROSSING_RATIO)
+        self._tournament_groups_count = int(self._population_size / conf['tournament_group_size'])
+        self._mutated_sequences_per_population = int(self._population_size * conf['mutated_sequences_ratio'])
+        self._pmx_crossing_size = int(self.sequence_max_index * conf['pmx_crossing_ratio'])
 
         self._population = self._generate_initial_population()
         self._best_sequence = None
-        self._best_sequence_cost = None
+        self._best_sequence_cost = max_integer_size
 
     def solve(self):
         for _ in range(0, self._iterations_count):
@@ -35,9 +38,11 @@ class GeneticSolver(BaseSolver):
             if best_sequence_cost < self._best_sequence_cost:
                 self._best_sequence = elite_sequences[0]
                 self._best_sequence_cost = best_sequence_cost
-            new_population = self._perform_selection(population_with_costs)
-            population = self._perform_crossing(selected_population)
-            population = self._mutate_population(crossed_population)
+            new_population = self._perform_tournament_selection(elite_sequences, population_with_costs)
+            new_population = self._perform_crossing(new_population)
+            self._population = self._mutate_population(new_population)
+
+        self._print_results(self._best_sequence, self._best_sequence_cost)
 
     def _generate_initial_population(self) -> List[List[int]]:
         basic_sequence = list(range(1, len(self.destinations)))
@@ -57,22 +62,18 @@ class GeneticSolver(BaseSolver):
 
         return population_with_costs
 
-    def _perform_selection(self, population_with_costs: List[Tuple[float, List[int]]]) -> List[List[int]]:
-
-        return self._tournament_selection(selected_sequences, population_with_costs)
-
-    def _select_elites(self, population_with_costs: List[Tuple[float, List[int]]]) -> List[List[int]]:
+    def _select_elites(self, population_with_costs: List[Tuple[float, List[int]]]) -> Tuple[List[List[int]], float]:
         sorted_population = sorted(population_with_costs)
         elites = [sorted_population[i][1] for i in range(0, self._elite_count)]
         best_sequence_cost = sorted_population[0][0]
 
         return elites, best_sequence_cost
 
-    def _tournament_selection(self, selected_sequences: List[List[int]],
-                              population_with_costs: List[Tuple[float, List[int]]]) -> List[List[int]]:
+    def _perform_tournament_selection(self, selected_sequences: List[List[int]],
+                                      population_with_costs: List[Tuple[float, List[int]]]) -> List[List[int]]:
         while True:
             shuffle(population_with_costs)
-            tournament_groups = [population_with_costs[i::self._groups_count] for i in range(self._groups_count)]
+            tournament_groups = [population_with_costs[i::self._tournament_groups_count] for i in range(self._tournament_groups_count)]
             for group in tournament_groups:
                 best_sequence_in_group = sorted(group)[0]
                 selected_sequences.append(best_sequence_in_group[1])
@@ -91,12 +92,12 @@ class GeneticSolver(BaseSolver):
         end_index = start_index + self._pmx_crossing_size
         sequence_a[start_index:end_index] = sequence_b[start_index:end_index]
         sequence_b[start_index:end_index] = sequence_a[start_index:end_index]
-
+        # ToDo: implement it
         return sequence_a, sequence_b
 
     def _mutate_population(self, population: List[List[int]]) -> List[List[int]]:
         sequence_ids_to_mutate = [
-            randint(0, self._population_size) for _ in range(0, self._mutated_sequences_per_population)
+            randint(0, self._population_size - 1) for _ in range(0, self._mutated_sequences_per_population)
         ]
         for sequence_id in sequence_ids_to_mutate:
             population[sequence_id] = self._mutate_by_inversion(population[sequence_id])
