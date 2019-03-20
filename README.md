@@ -26,10 +26,15 @@ python vrp.py --help
 Available parameters as environment variables:
 - APP_KEY - application key for Google API
 
+## Unit tests
+```bash
+make run-tests
+```
+
 ## Static code analysis
 
-Combination of *mypy* and typehints allow to run:
+Combination of *mypy* and typehints.
 
 ```bash
-mypy vrp.py
+make run-mypy
 ```

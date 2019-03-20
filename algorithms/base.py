@@ -1,4 +1,5 @@
 import abc
+
 from typing import Sequence
 from pathlib import Path
 
@@ -18,6 +19,7 @@ class BaseSolver(metaclass=abc.ABCMeta):
 
         self.destinations = distance_matrix['destination_addresses']
         self.destinations_count = len(self.destinations)
+        self.sequence_len = self.destinations_count - 1  # Depot destination is outside of sequence
         self.sequence_max_index = self.destinations_count - 2
 
         self.distance_matrix = distance_matrix['matrix']
