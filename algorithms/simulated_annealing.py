@@ -8,35 +8,32 @@ from algorithms.base import BaseSolver
 
 
 class SimulatedAnnealingSolver(BaseSolver):
-    DEFAULT_TEMPERATURE_FACTOR = 100
-    DEFAULT_ITERATIONS_COUNT = 1_000
-
-    def __init__(self, distance_matrix_path: str, configuration_path: str, vehicles_path: str,
-                 iterations_count: int, temperature_factor: int):
+    def __init__(self, distance_matrix_path: str, configuration_path: str, vehicles_path: str):
         super(SimulatedAnnealingSolver, self).__init__(distance_matrix_path, configuration_path, vehicles_path)
-        self._solution = self._generate_initial_sequence()
-        self._solution_cost = self._get_sequence_cost(self._solution)
-        self._sequence_max_index = len(self._solution) - 1
-        self._temperature_factor = temperature_factor
-        self._iterations_count = iterations_count
+        conf = self.configuration['simulated_annealing']
+        self._iterations_count = conf['iterations_count']
+        self._temperature_factor = conf['temperature_factor']
+
+        self._best_sequence = self._generate_initial_sequence()
+        self._best_sequence_cost = self._get_sequence_cost(self._best_sequence)
 
     def solve(self):
-        sequence = deepcopy(self._solution)
+        sequence = deepcopy(self._best_sequence)
 
         for i in range(0, self._iterations_count):
             new_sequence = self._create_new_sequence(deepcopy(sequence))
             cost = self._get_sequence_cost(new_sequence)
 
-            if cost < self._solution_cost:
+            if cost < self._best_sequence_cost:
                 sequence = new_sequence
-                self._solution = deepcopy(sequence)
-                self._solution_cost = deepcopy(cost)
+                self._best_sequence = deepcopy(sequence)
+                self._best_sequence_cost = deepcopy(cost)
                 # print(f"New solution: {self._solution} cost: {self._solution_cost}")
             else:
                 if self.calculate_probability(i, cost) > random():
                     sequence = new_sequence
 
-        self._print_results(self._solution, self._solution_cost)
+        self._print_results(self._best_sequence, self._best_sequence_cost)
 
     def _generate_initial_sequence(self) -> List[int]:
         init_sequence = list(range(1, len(self.destinations)))
@@ -48,8 +45,8 @@ class SimulatedAnnealingSolver(BaseSolver):
         """
         Changes 2 points place in a sequence
         """
-        index_a = randint(0, self._sequence_max_index)
-        index_b = randint(0, self._sequence_max_index)
+        index_a = randint(0, self.sequence_max_index)
+        index_b = randint(0, self.sequence_max_index)
 
         if index_a != index_b:
             sequence[index_a], sequence[index_b] = sequence[index_b], sequence[index_a]
@@ -60,7 +57,7 @@ class SimulatedAnnealingSolver(BaseSolver):
 
     def calculate_probability(self, iteration_number: int, cost: float) -> float:
         temperature = self._calculate_temperature(iteration_number)
-        probability = np.power(np.e, -1 * (cost - self._solution_cost) / temperature)
+        probability = np.power(np.e, -1 * (cost - self._best_sequence_cost) / temperature)
 
         return probability
 

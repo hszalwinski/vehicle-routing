@@ -1,7 +1,10 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
-  "required": ["optimization", "constraints"],
+  "required": [
+    "optimization",
+    "constraints"
+  ],
   "properties": {
     "optimization": {
       "type": "object",
@@ -34,6 +37,76 @@
         },
         "maxRouteTimeEnabled": {
           "type": "boolean"
+        }
+      }
+    },
+    "simulated_annealing": {
+      "type": "object",
+      "required": [
+        "iterations_count",
+        "temperature_factor"
+      ],
+      "properties": {
+        "iterations_count": {
+          "type": "integer",
+          "minimum": 100,
+          "maximum": 10000000,
+          "description": "Number of iterations."
+        },
+        "temperature_factor": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000,
+          "description": "Lowering this factor, lowers probability of accepting worse sequence."
+        }
+      }
+    },
+    "genetic": {
+      "type": "object",
+      "required": [
+        "iterations_count",
+        "population_size",
+        "elite_sequences_ratio",
+        "tournament_group_size",
+        "mutated_sequences_ratio",
+        "pmx_crossing_ratio"
+      ],
+      "properties": {
+        "iterations_count": {
+          "type": "integer",
+          "minimum": 100,
+          "maximum": 10000000,
+          "description": "Number of epochs."
+        },
+        "population_size": {
+          "type": "integer",
+          "multipleOf": 2,
+          "minimum": 10,
+          "maximum": 10000,
+          "description": "Number of sequences in population."
+        },
+        "elite_sequences_ratio": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Answers: 'How much of all sequences will go directly into next population?'. It will be at least 1 sequence, even if ratio is 0."
+        },
+        "tournament_group_size": {
+          "type": "integer",
+          "minimum": 2,
+          "description": "Tournament is a selection method, which groups sequences. Value of this parameter cannot be bigger than 'population_size'."
+        },
+        "mutated_sequences_ratio": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Answers: 'How much of all sequences will get mutated?'."
+        },
+        "pmx_crossing_ratio": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Answers: 'How much locations in sequences will get crossed?'."
         }
       }
     }

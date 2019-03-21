@@ -5,6 +5,8 @@ verify_ssl = true
 
 [dev-packages]
 mypy = "*"
+pytest = "*"
+mock = "*"
 
 [packages]
 ortools = "*"
@@ -12,6 +14,8 @@ googlemaps = "*"
 click = "*"
 numpy = "*"
 jsonschema = "*"
+ordered-set = "*"
+ordered-set-stubs = "*"
 
 [requires]
 python_version = "3.7"

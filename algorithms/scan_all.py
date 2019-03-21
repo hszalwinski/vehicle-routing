@@ -1,4 +1,4 @@
-import sys
+from sys import maxsize as max_integer_size
 
 from algorithms.base import BaseSolver
 
@@ -14,7 +14,7 @@ class ScanAllSolver(BaseSolver):
         permutations = itertools.permutations(destination_ids)
 
         solution = None
-        solution_cost = sys.maxsize
+        solution_cost = max_integer_size
         for sequence in permutations:
             cost = self._get_sequence_cost(sequence)
             if cost < solution_cost:
