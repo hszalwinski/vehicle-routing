@@ -11,8 +11,9 @@ from algorithms.base import BaseSolver
 class SimulatedAnnealingSolver(BaseSolver):
     DEFAULT_OUTPUT_PATH = Path('..', 'data', 'results')
 
-    def __init__(self, distance_matrix_path: str, configuration_path: str, vehicles_path: str):
-        super(SimulatedAnnealingSolver, self).__init__(distance_matrix_path, configuration_path, vehicles_path)
+    def __init__(self, distance_matrix_path: str, configuration_path: str, vehicles_path: str, output_path: str):
+        super(SimulatedAnnealingSolver, self).__init__(distance_matrix_path, configuration_path, vehicles_path,
+                                                       output_path)
         conf = self.configuration['simulated_annealing']
         self._iterations_count = conf['iterations_count']
         self._temperature_factor = conf['temperature_factor']

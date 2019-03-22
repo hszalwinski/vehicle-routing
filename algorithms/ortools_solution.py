@@ -6,8 +6,8 @@ from algorithms.base import BaseSolver, SolverException
 
 
 class OrtoolsSolver(BaseSolver):
-    def __init__(self, distance_matrix_path: str, configuration_path: str, vehicles_path: str):
-        super(OrtoolsSolver, self).__init__(distance_matrix_path, configuration_path, vehicles_path)
+    def __init__(self, distance_matrix_path: str, configuration_path: str, vehicles_path: str, output_path: str):
+        super(OrtoolsSolver, self).__init__(distance_matrix_path, configuration_path, vehicles_path, output_path)
         self.distance_callback = self._create_distance_callback()
         self.depot = 0
 

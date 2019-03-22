@@ -1,10 +1,10 @@
 import abc
 from time import time
 
-from typing import Sequence
+from typing import Sequence, Tuple
 from pathlib import Path
 
-from tools.file_operations import load_from_pickle_file, load_json_and_validate
+from tools.file_operations import load_from_pickle_file, load_json_and_validate, save_to_csv_file
 
 
 class SolverException(Exception):
@@ -14,9 +14,10 @@ class SolverException(Exception):
 class BaseSolver(metaclass=abc.ABCMeta):
     CONFIGURATION_SCHEMA_PATH = Path('data', 'configuration_schema.json')
     VEHICLES_SCHEMA_PATH = Path('data', 'vehicles_schema.json')
-    DEFAULT_OUTPUT_PATH = Path('..')
+    DEFAULT_OUTPUT_PATH = Path('data', 'results', 'default.csv')
+    OUTPUT_HEADER = ['destinations_count', 'cost', 'execution_time', 'sequence']
 
-    def __init__(self, distance_matrix_path: str, configuration_path: str, vehicles_path: str):
+    def __init__(self, distance_matrix_path: str, configuration_path: str, vehicles_path: str, output_path: str):
         distance_matrix = load_from_pickle_file(path=distance_matrix_path)
 
         self.destinations = distance_matrix['destination_addresses']
@@ -33,6 +34,7 @@ class BaseSolver(metaclass=abc.ABCMeta):
                                                     file_path=configuration_path)
         self.vehicles = load_json_and_validate(schema_path=self.VEHICLES_SCHEMA_PATH,
                                                file_path=vehicles_path)
+        self.output_path = Path(output_path) if output_path else self.DEFAULT_OUTPUT_PATH
 
     def solve(self):
         start = time()
@@ -44,7 +46,7 @@ class BaseSolver(metaclass=abc.ABCMeta):
         self._save_results(sequence, sequence_cost, execution_time)
 
     @abc.abstractmethod
-    def _solve(self) -> (Sequence, float):
+    def _solve(self) -> Tuple[Sequence, float]:
         pass
 
     def _arc_cost(self, from_node: int, to_node: int) -> float:
@@ -69,4 +71,5 @@ class BaseSolver(metaclass=abc.ABCMeta):
         print(f'Algorithm took {execution_time} seconds to perform.')
 
     def _save_results(self, sequence, sequence_cost, execution_time):
-        pass
+        row = (self.destinations_count, sequence, sequence_cost, execution_time)
+        save_to_csv_file(self.output_path, self.OUTPUT_HEADER, rows=[row])

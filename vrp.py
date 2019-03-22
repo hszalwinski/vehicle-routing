@@ -17,7 +17,7 @@ def cli():
 
 @cli.command()
 @click.option('--app-key', '-a', envvar='APP_KEY', type=click.STRING, required=True)
-@click.option('--locations-json', '-i', type=click.Path(exists=True, readable=True, resolve_path=True), required=True)
+@click.option('--locations-json', '-i', type=click.Path(exists=True, resolve_path=True), required=True)
 @click.option('--output-csv', '-oc', type=click.Path(writable=True, resolve_path=True), required=True)
 @click.option('--output-pickle', '-op', type=click.Path(writable=True, resolve_path=True))
 def distance_matrix(app_key, locations_json, output_csv, output_pickle):
@@ -29,19 +29,20 @@ def distance_matrix(app_key, locations_json, output_csv, output_pickle):
 
 @cli.command()
 @click.option('--distance-matrix', '-d', type=click.Path(), required=True)
-@click.option('--configuration', '-c', type=click.Path(), required=False)
-@click.option('--vehicles', '-v', type=click.Path(), required=False)
-def scan_all(distance_matrix, configuration, vehicles):
+@click.option('--configuration', '-c', type=click.Path(), required=True)
+@click.option('--vehicles', '-v', type=click.Path(), required=True)
+@click.option('--output-file', '-o', type=click.Path(writable=True, resolve_path=True), required=False)
+def scan_all(distance_matrix, configuration, vehicles, output_file):
     """
     Solves VRP scanning all results.
     """
-    ScanAllSolver(distance_matrix, configuration, vehicles).solve()
+    ScanAllSolver(distance_matrix, configuration, vehicles, output_file).solve()
 
 
 @cli.command()
 @click.option('--distance-matrix', '-d', type=click.Path(), required=True)
-@click.option('--configuration', '-c', type=click.Path(), required=False)
-@click.option('--vehicles', '-v', type=click.Path(), required=False)
+@click.option('--configuration', '-c', type=click.Path(), required=True)
+@click.option('--vehicles', '-v', type=click.Path(), required=True)
 def ortools(distance_matrix, configuration, vehicles):
     """
     Solves VRP using Google ORTools algorithms.
@@ -51,8 +52,8 @@ def ortools(distance_matrix, configuration, vehicles):
 
 @cli.command()
 @click.option('--distance-matrix', '-d', type=click.Path(), required=True)
-@click.option('--configuration', '-c', type=click.Path(), required=False)
-@click.option('--vehicles', '-v', type=click.Path(), required=False)
+@click.option('--configuration', '-c', type=click.Path(), required=True)
+@click.option('--vehicles', '-v', type=click.Path(), required=True)
 def simulated_annealing(distance_matrix, configuration, vehicles):
     """
     Solves VRP using simulated annealing.
@@ -62,8 +63,8 @@ def simulated_annealing(distance_matrix, configuration, vehicles):
 
 @cli.command()
 @click.option('--distance-matrix', '-d', type=click.Path(), required=True)
-@click.option('--configuration', '-c', type=click.Path(), required=False)
-@click.option('--vehicles', '-v', type=click.Path(), required=False)
+@click.option('--configuration', '-c', type=click.Path(), required=True)
+@click.option('--vehicles', '-v', type=click.Path(), required=True)
 def genetic(distance_matrix, configuration, vehicles):
     """
     Solves VRP using genetic algorithm.
