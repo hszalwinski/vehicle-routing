@@ -1,3 +1,8 @@
+# Data module
+A place for input and output data of all types!
+
+## 
+
 # Algorithms output
 This folder is created to contain database like files, where output of each algorithm will be saved.
 Any new run of algorithm will:

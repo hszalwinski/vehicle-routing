@@ -1,5 +1,6 @@
 clean-workspace:
 	rm -rf .mypy_cache
+	rm -rf .pytest_cache
 	rm -rf tests/.pytest_cache
 
 run-mypy:
