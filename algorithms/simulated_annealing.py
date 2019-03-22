@@ -1,13 +1,16 @@
 import numpy as np
 
+from pathlib import Path
+
 from typing import List
 from random import shuffle, random, randint
-from copy import deepcopy
 
 from algorithms.base import BaseSolver
 
 
 class SimulatedAnnealingSolver(BaseSolver):
+    DEFAULT_OUTPUT_PATH = Path('..', 'data', 'results')
+
     def __init__(self, distance_matrix_path: str, configuration_path: str, vehicles_path: str):
         super(SimulatedAnnealingSolver, self).__init__(distance_matrix_path, configuration_path, vehicles_path)
         conf = self.configuration['simulated_annealing']
@@ -17,23 +20,23 @@ class SimulatedAnnealingSolver(BaseSolver):
         self._best_sequence = self._generate_initial_sequence()
         self._best_sequence_cost = self._get_sequence_cost(self._best_sequence)
 
-    def solve(self):
-        sequence = deepcopy(self._best_sequence)
+    def _solve(self):
+        sequence = [*self._best_sequence]
 
         for i in range(0, self._iterations_count):
-            new_sequence = self._create_new_sequence(deepcopy(sequence))
+            new_sequence = self._create_new_sequence([*sequence])
             cost = self._get_sequence_cost(new_sequence)
 
             if cost < self._best_sequence_cost:
                 sequence = new_sequence
-                self._best_sequence = deepcopy(sequence)
-                self._best_sequence_cost = deepcopy(cost)
-                # print(f"New solution: {self._solution} cost: {self._solution_cost}")
+                self._best_sequence = [*sequence]
+                self._best_sequence_cost = cost
+                # print(f"New solution: {self._best_sequence} cost: {self._best_sequence_cost}")
             else:
                 if self.calculate_probability(i, cost) > random():
                     sequence = new_sequence
 
-        self._print_results(self._best_sequence, self._best_sequence_cost)
+        return self._best_sequence, self._best_sequence_cost
 
     def _generate_initial_sequence(self) -> List[int]:
         init_sequence = list(range(1, len(self.destinations)))

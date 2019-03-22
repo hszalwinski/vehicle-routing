@@ -16,6 +16,7 @@ numpy = "*"
 jsonschema = "*"
 ordered-set = "*"
 ordered-set-stubs = "*"
+plotly = "*"
 
 [requires]
 python_version = "3.7"

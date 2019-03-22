@@ -22,21 +22,22 @@ class GeneticSolver(BaseSolver):
         self._pmx_crossing_size = int(self.sequence_max_index * conf['pmx_crossing_ratio'])
 
         self._population = self._generate_initial_population()
-        self._best_sequence = None
-        self._best_sequence_cost = max_integer_size
 
-    def solve(self):
+    def _solve(self):
+        best_sequence = None
+        best_cost = max_integer_size
+
         for _ in range(0, self._iterations_count):
             population_with_costs = self._get_population_with_costs()
-            elite_sequences, best_sequence_cost = self._select_elites(population_with_costs)
-            if best_sequence_cost < self._best_sequence_cost:
-                self._best_sequence = elite_sequences[0]
-                self._best_sequence_cost = best_sequence_cost
+            elite_sequences, population_best_cost = self._select_elites(population_with_costs)
+            if population_best_cost < best_cost:
+                best_sequence = elite_sequences[0]
+                best_cost = population_best_cost
             new_population = self._perform_tournament_selection(elite_sequences, population_with_costs)
             new_population = self._perform_crossing(new_population)
             self._population = self._mutate_population(new_population)
 
-        self._print_results(self._best_sequence, self._best_sequence_cost)
+        return best_sequence, best_cost
 
     def _generate_initial_population(self) -> List[List[int]]:
         basic_sequence = list(range(1, len(self.destinations)))

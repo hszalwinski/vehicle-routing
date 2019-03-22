@@ -5,7 +5,6 @@ from algorithms.scan_all import ScanAllSolver
 from algorithms.simulated_annealing import SimulatedAnnealingSolver
 from algorithms.ortools_solution import OrtoolsSolver
 from tools.distance_matrix import DistanceMatrixManager
-from tools.timer import timer
 
 
 @click.group()
@@ -32,7 +31,6 @@ def distance_matrix(app_key, locations_json, output_csv, output_pickle):
 @click.option('--distance-matrix', '-d', type=click.Path(), required=True)
 @click.option('--configuration', '-c', type=click.Path(), required=False)
 @click.option('--vehicles', '-v', type=click.Path(), required=False)
-@timer
 def scan_all(distance_matrix, configuration, vehicles):
     """
     Solves VRP scanning all results.
@@ -44,7 +42,6 @@ def scan_all(distance_matrix, configuration, vehicles):
 @click.option('--distance-matrix', '-d', type=click.Path(), required=True)
 @click.option('--configuration', '-c', type=click.Path(), required=False)
 @click.option('--vehicles', '-v', type=click.Path(), required=False)
-@timer
 def ortools(distance_matrix, configuration, vehicles):
     """
     Solves VRP using Google ORTools algorithms.
@@ -56,7 +53,6 @@ def ortools(distance_matrix, configuration, vehicles):
 @click.option('--distance-matrix', '-d', type=click.Path(), required=True)
 @click.option('--configuration', '-c', type=click.Path(), required=False)
 @click.option('--vehicles', '-v', type=click.Path(), required=False)
-@timer
 def simulated_annealing(distance_matrix, configuration, vehicles):
     """
     Solves VRP using simulated annealing.
@@ -68,7 +64,6 @@ def simulated_annealing(distance_matrix, configuration, vehicles):
 @click.option('--distance-matrix', '-d', type=click.Path(), required=True)
 @click.option('--configuration', '-c', type=click.Path(), required=False)
 @click.option('--vehicles', '-v', type=click.Path(), required=False)
-@timer
 def genetic(distance_matrix, configuration, vehicles):
     """
     Solves VRP using genetic algorithm.
