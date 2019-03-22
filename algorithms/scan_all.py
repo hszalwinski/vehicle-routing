@@ -1,11 +1,14 @@
+import itertools
+
 from sys import maxsize as max_integer_size
+from pathlib import Path
 
 from algorithms.base import BaseSolver
 
-import itertools
-
 
 class ScanAllSolver(BaseSolver):
+    DEFAULT_OUTPUT_PATH = Path('data', 'results', 'default_scan_all.csv')
+
     def __init__(self, distance_matrix_path: str, configuration_path: str, vehicles_path: str, output_path: str):
         super(ScanAllSolver, self).__init__(distance_matrix_path, configuration_path, vehicles_path, output_path)
 

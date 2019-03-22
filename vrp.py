@@ -43,33 +43,36 @@ def scan_all(distance_matrix, configuration, vehicles, output_file):
 @click.option('--distance-matrix', '-d', type=click.Path(), required=True)
 @click.option('--configuration', '-c', type=click.Path(), required=True)
 @click.option('--vehicles', '-v', type=click.Path(), required=True)
-def ortools(distance_matrix, configuration, vehicles):
+@click.option('--output-file', '-o', type=click.Path(writable=True, resolve_path=True), required=False)
+def ortools(distance_matrix, configuration, vehicles, output_file):
     """
     Solves VRP using Google ORTools algorithms.
     """
-    OrtoolsSolver(distance_matrix, configuration, vehicles).solve()
+    OrtoolsSolver(distance_matrix, configuration, vehicles, output_file).solve()
 
 
 @cli.command()
 @click.option('--distance-matrix', '-d', type=click.Path(), required=True)
 @click.option('--configuration', '-c', type=click.Path(), required=True)
 @click.option('--vehicles', '-v', type=click.Path(), required=True)
-def simulated_annealing(distance_matrix, configuration, vehicles):
+@click.option('--output-file', '-o', type=click.Path(writable=True, resolve_path=True), required=False)
+def simulated_annealing(distance_matrix, configuration, vehicles, output_file):
     """
     Solves VRP using simulated annealing.
     """
-    SimulatedAnnealingSolver(distance_matrix, configuration, vehicles).solve()
+    SimulatedAnnealingSolver(distance_matrix, configuration, vehicles, output_file).solve()
 
 
 @cli.command()
 @click.option('--distance-matrix', '-d', type=click.Path(), required=True)
 @click.option('--configuration', '-c', type=click.Path(), required=True)
 @click.option('--vehicles', '-v', type=click.Path(), required=True)
-def genetic(distance_matrix, configuration, vehicles):
+@click.option('--output-file', '-o', type=click.Path(writable=True, resolve_path=True), required=False)
+def genetic(distance_matrix, configuration, vehicles, output_file):
     """
     Solves VRP using genetic algorithm.
     """
-    GeneticSolver(distance_matrix, configuration, vehicles).solve()
+    GeneticSolver(distance_matrix, configuration, vehicles, output_file).solve()
 
 
 if __name__ == '__main__':

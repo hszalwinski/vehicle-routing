@@ -1,10 +1,10 @@
 import abc
-from time import time
 
+from time import time
 from typing import Sequence, Tuple
 from pathlib import Path
 
-from tools.file_operations import load_from_pickle_file, load_json_and_validate, save_to_csv_file
+from tools.file_operations import load_from_pickle_file, load_json_and_validate, save_to_csv_file, append_to_csv_file
 
 
 class SolverException(Exception):
@@ -71,5 +71,8 @@ class BaseSolver(metaclass=abc.ABCMeta):
         print(f'Algorithm took {execution_time} seconds to perform.')
 
     def _save_results(self, sequence, sequence_cost, execution_time):
-        row = (self.destinations_count, sequence, sequence_cost, execution_time)
-        save_to_csv_file(self.output_path, self.OUTPUT_HEADER, rows=[row])
+        row = (self.destinations_count, sequence_cost, f'{execution_time:.20f}', sequence)
+        if self.output_path.exists():
+            append_to_csv_file(self.output_path, rows=[row])
+        else:
+            save_to_csv_file(self.output_path, self.OUTPUT_HEADER, rows=[row])

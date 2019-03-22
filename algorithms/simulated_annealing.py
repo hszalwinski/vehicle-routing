@@ -1,15 +1,14 @@
-import numpy as np
-
 from pathlib import Path
-
 from typing import List
 from random import shuffle, random, randint
+
+import numpy as np
 
 from algorithms.base import BaseSolver
 
 
 class SimulatedAnnealingSolver(BaseSolver):
-    DEFAULT_OUTPUT_PATH = Path('..', 'data', 'results')
+    DEFAULT_OUTPUT_PATH = Path('data', 'results', 'default_simulated_annealing.csv')
 
     def __init__(self, distance_matrix_path: str, configuration_path: str, vehicles_path: str, output_path: str):
         super(SimulatedAnnealingSolver, self).__init__(distance_matrix_path, configuration_path, vehicles_path,

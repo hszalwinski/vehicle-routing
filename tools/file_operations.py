@@ -34,10 +34,18 @@ def save_to_pickle_file(path: Union[Path, str], content: Any) -> None:
         pickle.dump(content, f)
 
 
-def save_to_csv_file(path: Union[Path, str], header: Iterable[Any], rows: Iterable[Any]) -> None:
+def save_to_csv_file(path: Union[Path, str], header: Iterable[Any], rows: Iterable[Any], delimiter: str = ';') -> None:
     path = Path(path)
     with path.open('w', newline='', encoding='UTF-8') as f:
-        csv_writer = csv.writer(f, delimiter=';')
+        csv_writer = csv.writer(f, delimiter=delimiter)
         csv_writer.writerow(header)
+        for row in rows:
+            csv_writer.writerow(row)
+
+
+def append_to_csv_file(path: Union[Path, str], rows: Iterable[Any], delimiter: str = ';') -> None:
+    path = Path(path)
+    with path.open('a', newline='', encoding='UTF-8') as f:
+        csv_writer = csv.writer(f, delimiter=delimiter)
         for row in rows:
             csv_writer.writerow(row)

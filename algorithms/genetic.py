@@ -1,12 +1,16 @@
 from sys import maxsize as max_integer_size
 from random import sample, shuffle, randint
 from typing import List, Tuple
+from pathlib import Path
 
 from ordered_set import OrderedSet
+
 from algorithms.base import BaseSolver
 
 
 class GeneticSolver(BaseSolver):
+    DEFAULT_OUTPUT_PATH = Path('data', 'results', 'default_genetic.csv')
+
     def __init__(self, distance_matrix_path: str, configuration_path: str, vehicles_path: str, output_path: str):
         super(GeneticSolver, self).__init__(distance_matrix_path, configuration_path, vehicles_path, output_path)
         conf = self.configuration['genetic']
