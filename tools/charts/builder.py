@@ -1,8 +1,8 @@
 from pathlib import Path
 
-from tools.chart.aggregations import build_cost_aggregation_chart, build_execution_time_aggregation_chart
-from tools.chart.comparison import build_cost_comparison_chart, build_execution_time_comparison_chart
-from tools.chart.base import RESULTS_DIR
+from tools.charts.aggregations import build_cost_aggregation_chart, build_execution_time_aggregation_chart
+from tools.charts.comparison import build_cost_comparison_chart, build_execution_time_comparison_chart
+from tools.charts.base import RESULTS_DIR
 
 # Set working directory to project root directory
 

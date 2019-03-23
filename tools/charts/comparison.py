@@ -3,8 +3,9 @@ from pathlib import Path
 
 from plotly.graph_objs import Scatter
 
-from tools.chart.base import Aggregator, get_chart_data_from_csv_results, get_costs_to_plot, get_execution_time_to_plot, \
-    build_chart
+from tools.charts.base import Aggregator, get_chart_data_from_csv_results, get_costs_to_plot, build_chart, \
+    get_execution_time_to_plot
+
 from tools.file_operations import load_csv_file
 
 
