@@ -2,9 +2,10 @@ import csv
 import json
 import pickle
 
-from jsonschema import validate
 from pathlib import Path
-from typing import Union, Any, Iterable
+from typing import Union, Any, Iterable, List, Tuple
+
+from jsonschema import validate
 
 
 def load_from_pickle_file(path: Union[Path, str]) -> Any:
@@ -34,10 +35,25 @@ def save_to_pickle_file(path: Union[Path, str], content: Any) -> None:
         pickle.dump(content, f)
 
 
-def save_to_csv_file(path: Union[Path, str], header: Iterable[Any], rows: Iterable[Any]) -> None:
+def save_to_csv_file(path: Union[Path, str], header: Iterable[Any], rows: Iterable[Any], delimiter: str = ';') -> None:
     path = Path(path)
     with path.open('w', newline='', encoding='UTF-8') as f:
-        csv_writer = csv.writer(f, delimiter=',')
+        csv_writer = csv.writer(f, delimiter=delimiter)
         csv_writer.writerow(header)
         for row in rows:
             csv_writer.writerow(row)
+
+
+def append_to_csv_file(path: Union[Path, str], rows: Iterable[Any], delimiter: str = ';') -> None:
+    path = Path(path)
+    with path.open('a', newline='', encoding='UTF-8') as f:
+        csv_writer = csv.writer(f, delimiter=delimiter)
+        for row in rows:
+            csv_writer.writerow(row)
+
+
+def load_csv_file(path: Union[Path, str], delimiter: str = ';') -> Tuple[List[str], List[dict]]:
+    path = Path(path)
+    with path.open(mode='r') as csv_file:
+        csv_reader = csv.DictReader(csv_file, delimiter=delimiter)
+        return csv_reader.fieldnames, list(csv_reader)
