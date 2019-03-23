@@ -1,9 +1,10 @@
 from pathlib import Path
 
+from tools.chart.aggregations import build_cost_aggregation_chart, build_execution_time_aggregation_chart
+from tools.chart.comparison import build_cost_comparison_chart, build_execution_time_comparison_chart
 from tools.chart.base import RESULTS_DIR
 
 # Set working directory to project root directory
-from tools.chart.comparison import build_cost_comparison_chart, build_execution_time_comparison_chart
 
 SCAN_ALL_NAME = 'Sprawdź wszystkie'
 SCAN_ALL_PATH = Path(RESULTS_DIR, 'tsp-scan_all-01.csv')
@@ -26,4 +27,11 @@ algorithms_data = {
 
 build_cost_comparison_chart(algorithms_data)
 build_execution_time_comparison_chart(algorithms_data)
-build_cost_aggregation_chart()
+build_cost_aggregation_chart(SCAN_ALL_NAME, SCAN_ALL_PATH)
+build_cost_aggregation_chart(ORTOOLS_NAME, ORTOOLS_PATH)
+build_cost_aggregation_chart(GENETIC_NAME, GENETIC_PATH)
+build_cost_aggregation_chart(SIMULATED_ANNEALING_NAME, SIMULATED_ANNEALING_PATH)
+build_execution_time_aggregation_chart(SCAN_ALL_NAME, SCAN_ALL_PATH)
+build_execution_time_aggregation_chart(ORTOOLS_NAME, ORTOOLS_PATH)
+build_execution_time_aggregation_chart(GENETIC_NAME, GENETIC_PATH)
+build_execution_time_aggregation_chart(SIMULATED_ANNEALING_NAME, SIMULATED_ANNEALING_PATH)

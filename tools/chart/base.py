@@ -11,7 +11,7 @@ RESULTS_DIR = Path('data', 'results')
 
 class Aggregator(Enum):
     MIN = 'min'
-    MEAN = 'mean'
+    MEAN = 'średnia'
     MAX = 'max'
 
 

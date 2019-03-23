@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, Union
 from pathlib import Path
 
 from plotly.graph_objs import Scatter
@@ -8,7 +8,7 @@ from tools.chart.base import Aggregator, get_chart_data_from_csv_results, get_co
 from tools.file_operations import load_csv_file
 
 
-def build_cost_comparison_chart(algorithms_data: Dict[str, Path or str], save_image=False):
+def build_cost_comparison_chart(algorithms_data: Dict[str, Union[Path, str]], save_image=False):
     figure_data = []
     for name, path in algorithms_data.items():
         _, results = load_csv_file(path)
@@ -27,7 +27,7 @@ def build_cost_comparison_chart(algorithms_data: Dict[str, Path or str], save_im
     build_chart(figure, filename='algorithms_cost_comparison', save_image=save_image)
 
 
-def build_execution_time_comparison_chart(algorithms_data: Dict[str, Path or str], save_image=False):
+def build_execution_time_comparison_chart(algorithms_data: Dict[str, Union[Path, str]], save_image=False):
     figure_data = []
     for name, path in algorithms_data.items():
         _, results = load_csv_file(path)
