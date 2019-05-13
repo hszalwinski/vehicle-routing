@@ -1,4 +1,5 @@
 import click
+from subprocess import run
 
 from algorithms.genetic import GeneticSolver
 from algorithms.scan_all import ScanAllSolver
@@ -73,6 +74,23 @@ def genetic(distance_matrix, configuration, vehicles, output_file):
     Solves VRP using genetic algorithm.
     """
     GeneticSolver(distance_matrix, configuration, vehicles, output_file).solve()
+
+
+@cli.command()
+@click.option('--algorithm', '-al', type=click.Choice(['scan_all', 'ortools', 'simulated_annealing', 'genetic']),
+              required=True)
+@click.option('--distance-matrix', '-d', type=click.Path(), required=True)
+@click.option('--configuration', '-c', type=click.Path(), required=True)
+@click.option('--vehicles', '-v', type=click.Path(), required=True)
+@click.option('--output-file', '-o', type=click.Path(writable=True, resolve_path=True), required=False)
+def simulation(algorithm, distance_matrix, configuration, vehicles, output_file):
+    for destinations_count in range(4, 31):
+        for iteration_number in range(0, 10):
+            run(['python', 'vrp.py', algorithm,
+                 '-d', distance_matrix,
+                 '-c', configuration,
+                 '-v', vehicles,
+                 '-o', output_file])
 
 
 if __name__ == '__main__':
