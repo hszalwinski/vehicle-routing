@@ -150,7 +150,8 @@ def comparison_chart(statistic_type, output_filename,
 @click.option('--output-filename', '-of', type=click.STRING, required=True)
 def aggregation_chart(statistic_type, algorithm, input_file, aggregation_types, output_filename):
     """
-    Combines multiple result aggregations for a single algorithm.
+    Combines multiple result aggregations for a single algorithm. Multiple 'aggregation-type'
+    parameters can be provided.
     """
     if algorithm == SCAN_ALL:
         drawable_stats = ScanAllDrawableStats(input_file)
