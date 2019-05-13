@@ -1,47 +1,27 @@
-from typing import Dict, Union
-from pathlib import Path
+from typing import List
 
 from plotly.graph_objs import Scatter
 
-from tools.charts.base import Aggregator, get_chart_data_from_csv_results, get_costs_to_plot, build_chart, \
-    get_execution_time_to_plot
-
+from tools.charts.base import BaseChart
+from tools.charts.types import StatisticType, AggregatorType, DrawableStats
 from tools.file_operations import load_csv_file
 
 
-def build_cost_comparison_chart(algorithms_data: Dict[str, Union[Path, str]], save_image=False):
-    figure_data = []
-    for name, path in algorithms_data.items():
-        _, results = load_csv_file(path)
-        chart_data = get_chart_data_from_csv_results(results)
-        x, costs = get_costs_to_plot(chart_data, Aggregator.MEAN)
-        figure_data.append(Scatter(x=x, y=costs, mode='lines+markers', name=name))
+class ComparisonChart(BaseChart):
+    def __init__(self, statistic_type: str, aggregation_type=str):
+        super(ComparisonChart, self).__init__(statistic_type)
+        if statistic_type is StatisticType.COST:
+            self._chart_title = 'Comparison of solution costs'
+        elif statistic_type is StatisticType.EXECUTION_TIME:
+            self._chart_title = 'Comparison of execution times'
+        self._aggregation_type = AggregatorType(aggregation_type)
 
-    figure = {
-        'data': figure_data,
-        'layout': {
-            'title': 'Średnia odległość uzyskana przez algorytm',
-            'xaxis': {'title': 'Ilość odwiedzonych miejsc'},
-            'yaxis': {'title': 'Odległość [m]'},
-        }
-    }
-    build_chart(figure, filename='algorithms_cost_comparison', save_image=save_image)
+    def build(self, drawable_stats: List[DrawableStats], filename: str):
+        figure_data = []
+        for ds in drawable_stats:
+            _, results = load_csv_file(ds.stats_path)
+            chart_data = self._get_chart_data_from_csv_results(results)
+            x, y = self._get_data_to_plot(chart_data, self._aggregation_type)
+            figure_data.append(Scatter(x=x, y=y, mode='lines+markers', name=str(ds)))
 
-
-def build_execution_time_comparison_chart(algorithms_data: Dict[str, Union[Path, str]], save_image=False):
-    figure_data = []
-    for name, path in algorithms_data.items():
-        _, results = load_csv_file(path)
-        chart_data = get_chart_data_from_csv_results(results)
-        x, costs = get_execution_time_to_plot(chart_data, Aggregator.MEAN)
-        figure_data.append(Scatter(x=x, y=costs, mode='lines+markers', name=name))
-
-    figure = {
-        'data': figure_data,
-        'layout': {
-            'title': 'Średni czas wykonania algorytmu',
-            'xaxis': {'title': 'Ilość odwiedzonych miejsc'},
-            'yaxis': {'title': 'Czas [s]'},
-        }
-    }
-    build_chart(figure, filename='algorithms_execution_time_comparison', save_image=save_image)
+        self._plot_chart(figure_data, filename)
