@@ -11,6 +11,7 @@ class AggregatorType(Enum):
     MIN = 'min'
     MEAN = 'mean'
     MAX = 'max'
+    PERC90 = 'perc90'
 
 
 def get_styles_for_aggregator(aggregator: AggregatorType) -> dict:

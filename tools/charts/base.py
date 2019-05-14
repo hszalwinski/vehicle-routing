@@ -1,6 +1,6 @@
 from typing import List, Tuple, Dict, Callable
 
-from numpy import array
+from numpy import array, percentile
 from plotly.offline import plot
 
 from tools.charts.types import StatisticType, AggregatorType
@@ -41,6 +41,8 @@ class BaseChart:
             return lambda x: x.mean()
         elif aggregator == AggregatorType.MAX:
             return lambda x: x.max()
+        elif aggregator == AggregatorType.PERC90:
+            return lambda x: percentile(x, 90)
         else:
             raise Exception(f'Unsupported aggregation method used: {aggregator}')
 
