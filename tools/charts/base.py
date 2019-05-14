@@ -17,9 +17,8 @@ class BaseChart:
         else:
             raise Exception(f'Chart not implemented for: {statistic_type}')
 
-    # noinspection PyTypeChecker
     def _get_chart_data_from_csv_results(self, csv_results: List[dict]) -> Dict[int, Dict]:
-        chart_data = {}
+        chart_data: Dict[int, Dict] = {}
         for result in csv_results:
             locations_count = int(result['locations_count'])
             if chart_data.get(locations_count) is None:

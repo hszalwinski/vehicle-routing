@@ -3,7 +3,7 @@ import json
 import pickle
 
 from pathlib import Path
-from typing import Union, Any, Iterable, List, Tuple
+from typing import Union, Any, Iterable, List, Tuple, Sequence
 
 from jsonschema import validate
 
@@ -52,7 +52,7 @@ def append_to_csv_file(path: Union[Path, str], rows: Iterable[Any], delimiter: s
             csv_writer.writerow(row)
 
 
-def load_csv_file(path: Union[Path, str], delimiter: str = ';') -> Tuple[List[str], List[dict]]:
+def load_csv_file(path: Union[Path, str], delimiter: str = ';') -> Tuple[Sequence[str], List[dict]]:
     path = Path(path)
     with path.open(mode='r') as csv_file:
         csv_reader = csv.DictReader(csv_file, delimiter=delimiter)
