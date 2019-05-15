@@ -6,9 +6,7 @@
     "type": "object",
     "required": [
       "vehicleId",
-      "maxWorkTime",
-      "maxRouteDistance",
-      "totalCapacity"
+      "maxRouteDistance"
     ],
     "properties": {
       "vehicleId": {

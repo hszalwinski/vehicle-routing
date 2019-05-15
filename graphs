@@ -3,7 +3,10 @@ tsp-scan-all-aggregation:
 	-st costs \
 	-al scan-all \
 	-if data/results/scan-all.csv \
+	-at min \
 	-at mean \
+	-at max \
+	-at perc90 \
 	-of scan-all
 
 tsp-scan-all-comparison:
