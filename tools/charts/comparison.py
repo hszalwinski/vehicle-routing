@@ -10,9 +10,9 @@ from tools.file_operations import load_csv_file
 class ComparisonChart(BaseChart):
     def __init__(self, statistic_type: str, aggregation_type=str):
         super(ComparisonChart, self).__init__(statistic_type)
-        if statistic_type is StatisticType.COST:
+        if self._statistic_type is StatisticType.COSTS:
             self._chart_title = 'Comparison of solution costs'
-        elif statistic_type is StatisticType.EXECUTION_TIME:
+        elif self._statistic_type is StatisticType.EXECUTION_TIMES:
             self._chart_title = 'Comparison of execution times'
         self._aggregation_type = AggregatorType(aggregation_type)
 

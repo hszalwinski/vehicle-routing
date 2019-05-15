@@ -10,9 +10,9 @@ from tools.file_operations import load_csv_file
 class AggregationChart(BaseChart):
     def __init__(self, statistic_type: str):
         super(AggregationChart, self).__init__(statistic_type)
-        if statistic_type is StatisticType.COST:
+        if self._statistic_type is StatisticType.COSTS:
             self._chart_title = 'Various aggregations of solution costs using "{algorithm}"'
-        elif statistic_type is StatisticType.EXECUTION_TIME:
+        elif self._statistic_type is StatisticType.EXECUTION_TIMES:
             self._chart_title = 'Various aggregations of execution times using "{algorithm}"'
 
     def build(self, drawable_stats: DrawableStats, aggregation_types: Iterable, filename: str):
@@ -26,5 +26,5 @@ class AggregationChart(BaseChart):
             x, y = self._get_data_to_plot(chart_data, aggregator=at)
             figure_data.append(Scatter(x=x, y=y, name=at.value, **at_styles))
 
-        self._chart_title = self._chart_title.format(str(drawable_stats))
+        self._chart_title = self._chart_title.format(algorithm=str(drawable_stats))
         self._plot_chart(figure_data, filename)

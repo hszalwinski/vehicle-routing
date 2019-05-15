@@ -3,8 +3,8 @@ from pathlib import Path
 
 
 class StatisticType(Enum):
-    COST = 'cost'
-    EXECUTION_TIME = 'execution_time'
+    COSTS = 'costs'
+    EXECUTION_TIMES = 'execution_times'
 
 
 class AggregatorType(Enum):

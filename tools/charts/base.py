@@ -10,9 +10,9 @@ class BaseChart:
     def __init__(self, statistic_type: str):
         self._statistic_type = StatisticType(statistic_type)
         self._chart_title = 'Default chart title'
-        if statistic_type is StatisticType.COST:
+        if self._statistic_type is StatisticType.COSTS:
             self._yaxis = {'title': 'Solution distance [m]'}
-        elif statistic_type is StatisticType.EXECUTION_TIME:
+        elif self._statistic_type is StatisticType.EXECUTION_TIMES:
             self._yaxis = {'title': 'Time [s]'}
         else:
             raise Exception(f'Chart not implemented for: {statistic_type}')
@@ -20,12 +20,12 @@ class BaseChart:
     def _get_chart_data_from_csv_results(self, csv_results: List[dict]) -> Dict[int, Dict]:
         chart_data: Dict[int, Dict] = {}
         for result in csv_results:
-            locations_count = int(result['locations_count'])
-            if chart_data.get(locations_count) is None:
-                chart_data[locations_count] = {'costs': [], 'execution_times': []}
+            destinations_count = int(result['destinations_count'])
+            if chart_data.get(destinations_count) is None:
+                chart_data[destinations_count] = {'costs': [], 'execution_times': []}
 
-            chart_data[locations_count]['costs'].append(float(result['cost']))
-            chart_data[locations_count]['execution_times'].append(float(result['execution_time']))
+            chart_data[destinations_count]['costs'].append(float(result['cost']))
+            chart_data[destinations_count]['execution_times'].append(float(result['execution_time']))
 
         for record in chart_data.values():
             record['costs'] = array(record['costs'])
@@ -48,21 +48,21 @@ class BaseChart:
     def _get_data_to_plot(self, chart_data: Dict[int, Dict], aggregator: AggregatorType) \
             -> Tuple[List[int], List[float]]:
         aggregate = self._get_aggregation_method(aggregator)
-        locations_counts = []
+        destinations_counts = []
         statistic_type_values = []
-        for locations_count, record in chart_data.items():
-            locations_counts.append(locations_count)
+        for destinations_count, record in chart_data.items():
+            destinations_counts.append(destinations_count)
             aggregated_statistic_type_values = aggregate(record[self._statistic_type.value])
             statistic_type_values.append(aggregated_statistic_type_values)
 
-        return locations_counts, statistic_type_values
+        return destinations_counts, statistic_type_values
 
     def _plot_chart(self, figure_data: List, filename: str):
         figure = {
             'data': figure_data,
             'layout': {
                 'title': self._chart_title,
-                'xaxis': {'title': 'Locations count'},
+                'xaxis': {'title': 'Destinations count'},
                 'yaxis': self._yaxis,
             }
         }

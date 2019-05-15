@@ -12,10 +12,10 @@ from tools.charts.types import STATISTIC_TYPES, AGGREGATOR_TYPES, ScanAllDrawabl
     GeneticDrawableStats, SimulatedAnnealingDrawableStats, AggregatorType
 from tools.distance_matrix import DistanceMatrixManager
 
-SCAN_ALL = 'scan_all'
+SCAN_ALL = 'scan-all'
 ORTOOLS = 'ortools'
 GENETIC = 'genetic'
-SIMULATED_ANNEALING = 'simulated_annealing'
+SIMULATED_ANNEALING = 'simulated-annealing'
 ALGORITHM_COMMANDS = (SCAN_ALL, ORTOOLS, GENETIC, SIMULATED_ANNEALING)
 
 
@@ -90,27 +90,20 @@ def genetic(distance_matrix, configuration, vehicles, output_file):
 @cli.command()
 @click.option('--algorithm', '-al', type=click.Choice(ALGORITHM_COMMANDS), required=True)
 @click.option('--iterations', '-i', type=click.IntRange(1, 1_000_000), required=False, default=1)
-@click.option('--min-destinations', '-mind', type=click.IntRange(4, 1_000_000), required=False, default=4)
-@click.option('--max-destinations', '-maxd', type=click.IntRange(4, 1_000_000), required=False, default=4)
 @click.option('--distance-matrix', '-d', type=click.Path(exists=True, resolve_path=True), required=True)
 @click.option('--configuration', '-c', type=click.Path(exists=True, resolve_path=True), required=True)
 @click.option('--vehicles', '-v', type=click.Path(exists=True, resolve_path=True), required=True)
 @click.option('--output-file', '-o', type=click.Path(writable=True, resolve_path=True), required=False)
-def simulation(algorithm, iterations, min_destinations, max_destinations,
-               distance_matrix, configuration, vehicles, output_file):
+def simulation(algorithm, iterations, distance_matrix, configuration, vehicles, output_file):
     """
-    Multiple times solves a VRP using chosen algorithm. Runs 'iterations' times for each destinations set,
-    defined by 'min-destinations' and 'max-destinations'.
-    e.g. iterations = 2, min_destinations = 4, max_destinations = 5
-    The program will run twice for 4 first destinations from file and also twice for first 5 destinations from file.
+    'iterations' times solves a VRP using chosen algorithm.
     """
-    for destinations_count in range(min_destinations, max_destinations + 1):
-        for _ in range(0, iterations):
-            run(['python', 'vrp.py', algorithm,
-                 '-d', distance_matrix,
-                 '-c', configuration,
-                 '-v', vehicles,
-                 '-o', output_file])
+    for _ in range(0, iterations):
+        run(['python', 'vrp.py', algorithm,
+             '-d', distance_matrix,
+             '-c', configuration,
+             '-v', vehicles,
+             '-o', output_file])
 
 
 @cli.command()
@@ -123,19 +116,19 @@ def simulation(algorithm, iterations, min_destinations, max_destinations,
 @click.option('--genetic', '-g', type=click.Path(exists=True, resolve_path=True), required=False)
 @click.option('--simulated-annealing', '-sia', type=click.Path(exists=True, resolve_path=True), required=False)
 def comparison_chart(statistic_type, output_filename,
-                     aggregation_type, scan_all_path=None, ortools_path=None, genetic_path=None, sa_path=None):
+                     aggregation_type, scan_all=None, ortools=None, genetic=None, simulated_annealing=None):
     """
     Compares different algorithms results.
     """
     drawable_stats = []
-    if scan_all_path:
-        drawable_stats.append(ScanAllDrawableStats(scan_all_path))
-    if ortools_path:
-        drawable_stats.append(ORToolsDrawableStats(ortools_path))
-    if genetic_path:
-        drawable_stats.append(GeneticDrawableStats(scan_all_path))
-    if sa_path:
-        drawable_stats.append(SimulatedAnnealingDrawableStats(scan_all_path))
+    if scan_all:
+        drawable_stats.append(ScanAllDrawableStats(scan_all))
+    if ortools:
+        drawable_stats.append(ORToolsDrawableStats(ortools))
+    if genetic:
+        drawable_stats.append(GeneticDrawableStats(genetic))
+    if simulated_annealing:
+        drawable_stats.append(SimulatedAnnealingDrawableStats(simulated_annealing))
 
     if drawable_stats:
         chart = ComparisonChart(statistic_type, aggregation_type)
@@ -148,7 +141,7 @@ def comparison_chart(statistic_type, output_filename,
 @click.option('--input_file', '-if', type=click.Path(exists=True, resolve_path=True), required=True)
 @click.option('--aggregation-type', '-at', type=click.Choice(AGGREGATOR_TYPES), required=True, multiple=True)
 @click.option('--output-filename', '-of', type=click.STRING, required=True)
-def aggregation_chart(statistic_type, algorithm, input_file, aggregation_types, output_filename):
+def aggregation_chart(statistic_type, algorithm, input_file, aggregation_type, output_filename):
     """
     Combines multiple result aggregations for a single algorithm. Multiple 'aggregation-type'
     parameters can be provided.
@@ -164,7 +157,7 @@ def aggregation_chart(statistic_type, algorithm, input_file, aggregation_types, 
     else:
         raise Exception('Implementation error')
 
-    aggregation_types = set(aggregation_types)
+    aggregation_types = set(aggregation_type)
     chart = AggregationChart(statistic_type)
     chart.build(drawable_stats, aggregation_types, output_filename)
 
