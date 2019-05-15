@@ -1,0 +1,17 @@
+tsp-scan-all-aggregation:
+	pipenv run python vrp.py aggregation-chart \
+	-st costs \
+	-al scan-all \
+	-if data/results/scan-all.csv \
+	-at mean \
+	-of scan-all
+
+tsp-scan-all-comparison:
+	pipenv run python vrp.py comparison-chart \
+	-st costs \
+	-of "Comparison of TSP results" \
+	-at mean \
+	-sca data/results/tsp-scan_all-01.csv \
+	-or data/results/tsp-ortools-01.csv \
+	-g data/results/tsp-genetic-01.csv \
+	-sia data/results/tsp-simulated_annealing-01.csv \
