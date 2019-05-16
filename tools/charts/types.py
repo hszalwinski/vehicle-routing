@@ -49,3 +49,9 @@ class GeneticDrawableStats(DrawableStats):
 
 class SimulatedAnnealingDrawableStats(DrawableStats):
     NAME = 'Simulated annealing'
+
+
+class CustomDrawableStats(DrawableStats):
+    def __init__(self, stats_path):
+        super(CustomDrawableStats, self).__init__(stats_path)
+        self.NAME = self.stats_path.name

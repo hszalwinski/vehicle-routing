@@ -1,6 +1,6 @@
 {
-  "constraints": {
-    "maxRouteDistanceEnabled": false
+  "configuration": {
+    "minimize_longest_single_route": true
   },
   "genetic": {
     "iterations_count": 100,

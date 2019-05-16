@@ -1,0 +1,39 @@
+max-5-sec-comparison-costs-mean:
+	pipenv run python vrp.py custom-chart \
+	-ct "Average costs comparison for different genetic algorithm configurations" \
+	-st costs \
+	-of "avg_costs_I_II_III" \
+	-at mean \
+	-if data/results/A/genetic/max_5_sec/tsp-I.csv \
+	-if data/results/A/genetic/max_5_sec/tsp-II.csv \
+	-if data/results/A/genetic/max_5_sec/tsp-III.csv
+
+max-5-sec-comparison-costs-perc90:
+	pipenv run python vrp.py custom-chart \
+	-ct "90th percentile costs comparison for different genetic algorithm configurations" \
+	-st costs \
+	-of "90perc_costs_I_II_III" \
+	-at perc90 \
+	-if data/results/A/genetic/max_5_sec/tsp-I.csv \
+	-if data/results/A/genetic/max_5_sec/tsp-II.csv \
+	-if data/results/A/genetic/max_5_sec/tsp-III.csv
+
+max-5-sec-comparison-time-mean:
+	pipenv run python vrp.py custom-chart \
+	-ct "Average execution times comparison for different genetic algorithm configurations" \
+	-st execution_times \
+	-of "avg_execution_times_I_II_III" \
+	-at mean \
+	-if data/results/A/genetic/max_5_sec/tsp-I.csv \
+	-if data/results/A/genetic/max_5_sec/tsp-II.csv \
+	-if data/results/A/genetic/max_5_sec/tsp-III.csv
+
+max-5-sec-comparison-time-perc90:
+	pipenv run python vrp.py custom-chart \
+	-ct "90th percentile execution times comparison for different genetic algorithm configurations" \
+	-st execution_times \
+	-of "90perc_execution_times_I_II_III" \
+	-at perc90 \
+	-if data/results/A/genetic/max_5_sec/tsp-I.csv \
+	-if data/results/A/genetic/max_5_sec/tsp-II.csv \
+	-if data/results/A/genetic/max_5_sec/tsp-III.csv

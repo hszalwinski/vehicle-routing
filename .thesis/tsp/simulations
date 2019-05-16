@@ -8,9 +8,8 @@ simulation-scan-all:
 		-i 100 \
 		-d data/distance_matrix/${DATASET}/${DATAFILE_LETTER}$${number}.pickle \
 		-c data/configurations/default.json \
-		-v data/vehicles/tsp.json
-		 \
-		-o data/results/${DATASET}/tsp-scan_all.csv ; \
+		-v data/vehicles/tsp.json \
+		-o data/results/${DATASET}/scan_all/tsp.csv ; \
     done
 	pipenv run python vrp.py simulation \
 		-al scan-all \
@@ -18,21 +17,21 @@ simulation-scan-all:
 		-d data/distance_matrix/${DATASET}/${DATAFILE_LETTER}11.pickle \
 		-c data/configurations/default.json \
 		-v data/vehicles/tsp.json \
-		-o data/results/${DATASET}/tsp-scan_all.csv
+		-o data/results/${DATASET}/scan_all/tsp.csv
 	pipenv run python vrp.py simulation \
 		-al scan-all \
 		-i 10 \
 		-d data/distance_matrix/${DATASET}/${DATAFILE_LETTER}12.pickle \
 		-c data/configurations/default.json \
 		-v data/vehicles/tsp.json \
-		-o data/results/${DATASET}/tsp-scan_all.csv
+		-o data/results/${DATASET}/scan_all/tsp.csv
 	pipenv run python vrp.py simulation \
 		-al scan-all \
 		-i 1 \
 		-d data/distance_matrix/${DATASET}/${DATAFILE_LETTER}13.pickle \
 		-c data/configurations/default.json \
 		-v data/vehicles/tsp.json \
-		-o data/results/${DATASET}/tsp-scan_all.csv
+		-o data/results/${DATASET}/scan_all/tsp.csv
 
 simulation-ortools:
 	for number in 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30; do \
@@ -42,5 +41,18 @@ simulation-ortools:
 		-d data/distance_matrix/${DATASET}/${DATAFILE_LETTER}$${number}.pickle \
 		-c data/configurations/default.json \
 		-v data/vehicles/tsp.json \
-		-o data/results/${DATASET}/tsp-ortools.csv ; \
+		-o data/results/${DATASET}/ortools/tsp.csv ; \
+    done
+
+simulation-genetic-max-5-sec:
+	for configuration in I II III; do \
+        for number in 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30; do \
+            pipenv run python vrp.py simulation \
+            -al genetic \
+    		-i 30 \
+            -d data/distance_matrix/${DATASET}/${DATAFILE_LETTER}$${number}.pickle \
+            -c data/configurations/genetic/max_5_sec/$${configuration}.json \
+            -v data/vehicles/tsp.json \
+            -o data/results/${DATASET}/genetic/max_5_sec/tsp-$${configuration}.csv ; \
+        done \
     done
