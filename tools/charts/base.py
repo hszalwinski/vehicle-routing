@@ -17,7 +17,7 @@ class BaseChart:
             self._yaxis = {'title': 'Time [s]'}
         else:
             raise Exception(f'Chart not implemented for: {statistic_type}')
-        self._colors = ['rgb(255,0,0)', 'rgb(0,255,0)', 'rgb(0,0,255)', 'rgb(0,0,0)', 'rgb(255,255,0)']
+        self._colors = ['rgb(255,0,0)', 'rgb(0,255,0)', 'rgb(0,0,255)', 'rgb(0,0,0)', 'rgb(255,0,255)']
 
     def _get_chart_data_from_csv_results(self, csv_results: List[dict]) -> Dict[int, Dict]:
         chart_data: Dict[int, Dict] = {}

@@ -9,9 +9,5 @@
     "tournament_group_size": 3,
     "mutated_sequences_ratio": 0.3,
     "pmx_crossing_ratio": 0.4
-  },
-  "simulated_annealing": {
-    "iterations_count": 1000,
-    "temperature_factor": 100
   }
 }

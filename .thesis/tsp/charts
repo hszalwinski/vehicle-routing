@@ -42,7 +42,7 @@ selection-improvements-comparison-costs-mean:
 	pipenv run python vrp.py custom-chart \
 	-ct "Average costs comparison for different genetic selection configurations" \
 	-st costs \
-	-of "avg_costs_I_II_III_IV" \
+	-of "avg_costs_I_II_III_IV_V" \
 	-at mean \
 	-if data/results/A/genetic/selection_improvements/tsp-I-chosen.csv \
 	-if data/results/A/genetic/selection_improvements/tsp-II.csv \
@@ -54,7 +54,7 @@ selection-improvements-comparison-costs-perc90:
 	pipenv run python vrp.py custom-chart \
 	-ct "90th percentile costs comparison for different genetic selection algorithm configurations" \
 	-st costs \
-	-of "90perc_costs_I_II_III_IV" \
+	-of "90perc_costs_I_II_III_IV_V" \
 	-at perc90 \
 	-if data/results/A/genetic/selection_improvements/tsp-I-chosen.csv \
 	-if data/results/A/genetic/selection_improvements/tsp-II.csv \
@@ -66,7 +66,7 @@ selection-improvements-comparison-time-mean:
 	pipenv run python vrp.py custom-chart \
 	-ct "Average execution times comparison for different genetic selection algorithm configurations" \
 	-st execution_times \
-	-of "avg_execution_times_I_II_III_IV" \
+	-of "avg_execution_times_I_II_III_IV_V" \
 	-at mean \
 	-if data/results/A/genetic/selection_improvements/tsp-I-chosen.csv \
 	-if data/results/A/genetic/selection_improvements/tsp-II.csv \
@@ -78,10 +78,98 @@ selection-improvements-comparison-time-perc90:
 	pipenv run python vrp.py custom-chart \
 	-ct "90th percentile execution times comparison for different genetic selection algorithm configurations" \
 	-st execution_times \
-	-of "90perc_execution_times_I_II_III_IV" \
+	-of "90perc_execution_times_I_II_III_IV_V" \
 	-at perc90 \
 	-if data/results/A/genetic/selection_improvements/tsp-I-chosen.csv \
 	-if data/results/A/genetic/selection_improvements/tsp-II.csv \
 	-if data/results/A/genetic/selection_improvements/tsp-III.csv \
 	-if data/results/A/genetic/selection_improvements/tsp-IV.csv \
 	-if data/results/A/genetic/selection_improvements/tsp-V.csv
+
+crossing-improvements-comparison-costs-mean:
+	pipenv run python vrp.py custom-chart \
+	-ct "Average costs comparison for different genetic crossing configurations" \
+	-st costs \
+	-of "avg_costs_I_II_III_IV" \
+	-at mean \
+	-if data/results/A/genetic/crossing_improvements/tsp-I-chosen.csv \
+	-if data/results/A/genetic/crossing_improvements/tsp-II.csv \
+	-if data/results/A/genetic/crossing_improvements/tsp-III.csv \
+	-if data/results/A/genetic/crossing_improvements/tsp-IV.csv \
+
+crossing-improvements-comparison-costs-perc90:
+	pipenv run python vrp.py custom-chart \
+	-ct "90th percentile costs comparison for different genetic crossing algorithm configurations" \
+	-st costs \
+	-of "90perc_costs_I_II_III_IV" \
+	-at perc90 \
+	-if data/results/A/genetic/crossing_improvements/tsp-I-chosen.csv \
+	-if data/results/A/genetic/crossing_improvements/tsp-II.csv \
+	-if data/results/A/genetic/crossing_improvements/tsp-III.csv \
+	-if data/results/A/genetic/crossing_improvements/tsp-IV.csv \
+
+crossing-improvements-comparison-time-mean:
+	pipenv run python vrp.py custom-chart \
+	-ct "Average execution times comparison for different genetic crossing algorithm configurations" \
+	-st execution_times \
+	-of "avg_execution_times_I_II_III_IV" \
+	-at mean \
+	-if data/results/A/genetic/crossing_improvements/tsp-I-chosen.csv \
+	-if data/results/A/genetic/crossing_improvements/tsp-II.csv \
+	-if data/results/A/genetic/crossing_improvements/tsp-III.csv \
+	-if data/results/A/genetic/crossing_improvements/tsp-IV.csv \
+
+crossing-improvements-comparison-time-perc90:
+	pipenv run python vrp.py custom-chart \
+	-ct "90th percentile execution times comparison for different genetic crossing algorithm configurations" \
+	-st execution_times \
+	-of "90perc_execution_times_I_II_III_IV" \
+	-at perc90 \
+	-if data/results/A/genetic/crossing_improvements/tsp-I-chosen.csv \
+	-if data/results/A/genetic/crossing_improvements/tsp-II.csv \
+	-if data/results/A/genetic/crossing_improvements/tsp-III.csv \
+	-if data/results/A/genetic/crossing_improvements/tsp-IV.csv \
+
+mutation-improvements-comparison-costs-mean:
+	pipenv run python vrp.py custom-chart \
+	-ct "Average costs comparison for different genetic mutation configurations" \
+	-st costs \
+	-of "avg_costs_I_II_III_IV" \
+	-at mean \
+	-if data/results/A/genetic/mutation_improvements/tsp-I-chosen.csv \
+	-if data/results/A/genetic/mutation_improvements/tsp-II.csv \
+	-if data/results/A/genetic/mutation_improvements/tsp-III.csv \
+	-if data/results/A/genetic/mutation_improvements/tsp-IV.csv \
+
+mutation-improvements-comparison-costs-perc90:
+	pipenv run python vrp.py custom-chart \
+	-ct "90th percentile costs comparison for different genetic mutation algorithm configurations" \
+	-st costs \
+	-of "90perc_costs_I_II_III_IV" \
+	-at perc90 \
+	-if data/results/A/genetic/mutation_improvements/tsp-I-chosen.csv \
+	-if data/results/A/genetic/mutation_improvements/tsp-II.csv \
+	-if data/results/A/genetic/mutation_improvements/tsp-III.csv \
+	-if data/results/A/genetic/mutation_improvements/tsp-IV.csv \
+
+mutation-improvements-comparison-time-mean:
+	pipenv run python vrp.py custom-chart \
+	-ct "Average execution times comparison for different genetic mutation algorithm configurations" \
+	-st execution_times \
+	-of "avg_execution_times_I_II_III_IV" \
+	-at mean \
+	-if data/results/A/genetic/mutation_improvements/tsp-I-chosen.csv \
+	-if data/results/A/genetic/mutation_improvements/tsp-II.csv \
+	-if data/results/A/genetic/mutation_improvements/tsp-III.csv \
+	-if data/results/A/genetic/mutation_improvements/tsp-IV.csv \
+
+mutation-improvements-comparison-time-perc90:
+	pipenv run python vrp.py custom-chart \
+	-ct "90th percentile execution times comparison for different genetic mutation algorithm configurations" \
+	-st execution_times \
+	-of "90perc_execution_times_I_II_III_IV" \
+	-at perc90 \
+	-if data/results/A/genetic/mutation_improvements/tsp-I-chosen.csv \
+	-if data/results/A/genetic/mutation_improvements/tsp-II.csv \
+	-if data/results/A/genetic/mutation_improvements/tsp-III.csv \
+	-if data/results/A/genetic/mutation_improvements/tsp-IV.csv \
