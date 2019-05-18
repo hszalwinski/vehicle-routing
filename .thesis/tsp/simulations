@@ -1,5 +1,5 @@
-DATASET := A
-DATAFILE_LETTER := a
+DATASET ?= A
+DATAFILE_LETTER ?= a
 
 scan-all:
 	for number in 4 5 6 7 8 9 10 ; do \
@@ -107,4 +107,41 @@ genetic-mutation-improvements:
             -v data/vehicles/tsp.json \
             -o data/results/${DATASET}/genetic/mutation_improvements/tsp-$${configuration}.csv ; \
         done \
+    done
+
+genetic-mutation-improvements:
+	for configuration in II III IV; do \
+        for number in 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30; do \
+            pipenv run python vrp.py simulation \
+            -al genetic \
+    		-i 30 \
+            -d data/distance_matrix/${DATASET}/${DATAFILE_LETTER}$${number}.pickle \
+            -c data/configurations/genetic/mutation_improvements/$${configuration}.json \
+            -v data/vehicles/tsp.json \
+            -o data/results/${DATASET}/genetic/mutation_improvements/tsp-$${configuration}.csv ; \
+        done \
+    done
+
+genetic-long:
+	for configuration in I II-randomness; do \
+        for number in 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30; do \
+            pipenv run python vrp.py simulation \
+            -al genetic \
+    		-i 30 \
+            -d data/distance_matrix/${DATASET}/${DATAFILE_LETTER}$${number}.pickle \
+            -c data/configurations/genetic/long/$${configuration}.json \
+            -v data/vehicles/tsp.json \
+            -o data/results/${DATASET}/genetic/long/tsp-$${configuration}.csv ; \
+        done \
+    done
+
+genetic:
+	for number in 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30; do \
+        pipenv run python vrp.py simulation \
+		-al genetic \
+		-i 70 \
+		-d data/distance_matrix/${DATASET}/${DATAFILE_LETTER}$${number}.pickle \
+		-c data/configurations/genetic/best_5_sec.json \
+		-v data/vehicles/tsp.json \
+		-o data/results/${DATASET}/genetic/tsp.csv ; \
     done

@@ -8,9 +8,9 @@ from tools.charts.types import StatisticType, AggregatorType
 
 
 class BaseChart:
-    def __init__(self, statistic_type: str):
+    def __init__(self, statistic_type: str, chart_tilte=str):
         self._statistic_type = StatisticType(statistic_type)
-        self._chart_title = 'Default chart title'
+        self._chart_title = chart_tilte
         if self._statistic_type is StatisticType.COSTS:
             self._yaxis = {'title': 'Solution distance [m]'}
         elif self._statistic_type is StatisticType.EXECUTION_TIMES:

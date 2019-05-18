@@ -8,8 +8,8 @@ from tools.file_operations import load_csv_file
 
 
 class CustomChart(BaseChart):
-    def __init__(self, statistic_type: str, aggregation_type=str, chart_tilte=str):
-        super(CustomChart, self).__init__(statistic_type)
+    def __init__(self, statistic_type: str, chart_tilte=str, aggregation_type=str):
+        super(CustomChart, self).__init__(statistic_type, chart_tilte)
         self._chart_title = chart_tilte
         self._aggregation_type = AggregatorType(aggregation_type)
 
