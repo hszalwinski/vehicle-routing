@@ -176,7 +176,7 @@ def custom_chart(chart_title, statistic_type, output_filename, aggregation_type,
     Compares custom results. Multiple 'input_file' parameters can be provided.
     """
     drawable_stats = [CustomDrawableStats(i) for i in input_file]
-    chart = CustomChart(statistic_type, aggregation_type, chart_title)
+    chart = CustomChart(statistic_type, chart_title, aggregation_type)
     chart.build(drawable_stats, output_filename)
 
 

@@ -48,6 +48,16 @@ genetic-mutation-improvements:
 	-if data/results/${DATASET}/genetic/mutation_improvements/tsp-III.csv \
 	-if data/results/${DATASET}/genetic/mutation_improvements/tsp-IV.csv \
 
+genetic-max-5-sec-vs-long:
+	pipenv run python vrp.py custom-chart \
+	-ct ${CHART_TITLE} \
+	-st ${STATISTIC_TYPE} \
+	-of "${AGGREGATION_TYPE}_${STATISTIC_TYPE}_max_5_sec_vs_long" \
+	-at ${AGGREGATION_TYPE} \
+	-if data/results/${DATASET}/genetic/tsp.csv \
+	-if data/results/${DATASET}/genetic/long/tsp-I.csv \
+	-if data/results/${DATASET}/genetic/long/tsp-II-randomness.csv \
+
 all-algorithms-comparison:
 	pipenv run python vrp.py comparison-chart \
 	-ct ${CHART_TITLE} \
