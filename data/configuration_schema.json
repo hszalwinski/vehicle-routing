@@ -1,17 +1,19 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
-  "required": [],
+  "required": [
+    "configuration"
+  ],
   "properties": {
-    "constraints": {
+    "configuration": {
       "type": "object",
       "required": [
-        "maxRouteDistanceEnabled"
+        "minimize_longest_single_route"
       ],
       "properties": {
-        "maxRouteDistanceEnabled": {
+        "minimize_longest_single_route": {
           "type": "boolean",
-          "description": "Defines if vehicle maxRouteDistance parameters should be applied."
+          "description": "Setting this as 'false' will allow to find only a single route for e.g. 2 vehicles."
         }
       }
     },

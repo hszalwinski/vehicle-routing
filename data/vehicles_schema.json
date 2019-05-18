@@ -5,8 +5,7 @@
   "items": {
     "type": "object",
     "required": [
-      "vehicleId",
-      "maxRouteDistance"
+      "vehicleId"
     ],
     "properties": {
       "vehicleId": {

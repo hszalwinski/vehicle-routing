@@ -1,10 +1,8 @@
 [
   {
-    "vehicleId": 1,
-    "maxRouteDistance": 200000
+    "vehicleId": 1
   },
   {
-    "vehicleId": 2,
-    "maxRouteDistance": 100000
+    "vehicleId": 2
   }
 ]
