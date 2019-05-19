@@ -9,7 +9,7 @@ from tools.file_operations import load_json_and_validate, save_to_pickle_file, s
 
 
 class DistanceMatrixManager:
-    LOCATIONS_SCHEMA_PATH = Path('data', 'locations_schema.json')
+    LOCATIONS_SCHEMA_PATH = Path('data', 'schemas', 'locations_schema.json')
     MAX_COORDINATES_SIZE_PER_REQUEST = 10
 
     def __init__(self, app_key: str) -> None:
