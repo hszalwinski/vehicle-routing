@@ -65,4 +65,4 @@ class SimulatedAnnealingSolver(BaseSolver):
         return probability
 
     def _calculate_temperature(self, iteration_number: int) -> float:
-        return self._temperature_factor / np.log(iteration_number + 1)
+        return self._temperature_factor / np.log(iteration_number + 2)
