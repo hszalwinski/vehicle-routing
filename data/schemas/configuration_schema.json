@@ -26,14 +26,14 @@
       "properties": {
         "iterations_count": {
           "type": "integer",
-          "minimum": 100,
-          "maximum": 10000000,
+          "minimum": 1,
+          "maximum": 100000000,
           "description": "Number of iterations."
         },
         "temperature_factor": {
           "type": "integer",
           "minimum": 1,
-          "maximum": 1000,
+          "maximum": 100000000,
           "description": "Lowering this factor, lowers probability of accepting worse sequence."
         }
       }
