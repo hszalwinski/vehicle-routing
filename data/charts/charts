@@ -58,6 +58,18 @@ genetic-max-5-sec-vs-long:
 	-if data/results/${DATASET}/genetic/long/tsp-I.csv \
 	-if data/results/${DATASET}/genetic/long/tsp-II-randomness.csv \
 
+simulated-annealing-max-1-sec:
+	pipenv run python vrp.py custom-chart \
+	-ct ${CHART_TITLE} \
+	-st ${STATISTIC_TYPE} \
+	-of "${AGGREGATION_TYPE}_${STATISTIC_TYPE}_I_II_III" \
+	-at ${AGGREGATION_TYPE} \
+	-if data/results/${DATASET}/simulated_annealing/max_1_sec/tsp-I.csv \
+	-if data/results/${DATASET}/simulated_annealing/max_1_sec/tsp-II.csv \
+	-if data/results/${DATASET}/simulated_annealing/max_1_sec/tsp-III.csv \
+	-if data/results/${DATASET}/simulated_annealing/max_1_sec/tsp-IV.csv \
+	-if data/results/${DATASET}/simulated_annealing/max_1_sec/tsp-V.csv
+
 all-algorithms-comparison:
 	pipenv run python vrp.py comparison-chart \
 	-ct ${CHART_TITLE} \

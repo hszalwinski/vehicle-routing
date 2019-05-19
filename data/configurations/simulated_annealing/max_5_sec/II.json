@@ -4,6 +4,6 @@
   },
   "simulated_annealing": {
     "iterations_count": 300000,
-    "temperature_factor": 20000
+    "temperature_factor": 10000
   }
 }
