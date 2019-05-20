@@ -88,5 +88,5 @@ all-algorithms-comparison:
 	-at ${AGGREGATION_TYPE} \
 	-sca data/results/${DATASET}/scan_all/tsp.csv \
 	-or data/results/${DATASET}/ortools/tsp.csv \
-	-g data/results/${DATASET}/genetic/tsp.csv
-	-sa data/results/${DATASET}/simulated_annealing/tsp.csv
+	-g data/results/${DATASET}/genetic/tsp.csv \
+	-sia data/results/${DATASET}/simulated_annealing/tsp.csv
