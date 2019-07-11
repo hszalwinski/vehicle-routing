@@ -3,18 +3,11 @@ from typing import Iterable
 from plotly.graph_objs import Scatter
 
 from tools.charts.base import BaseChart
-from tools.charts.types import AggregatorType, DrawableStats, StatisticType, get_styles_for_aggregator
+from tools.charts.types import AggregatorType, DrawableStats, get_styles_for_aggregator
 from tools.file_operations import load_csv_file
 
 
 class AggregationChart(BaseChart):
-    def __init__(self, statistic_type: str):
-        super(AggregationChart, self).__init__(statistic_type)
-        if self._statistic_type is StatisticType.COSTS:
-            self._chart_title = 'Various aggregations of solution costs using "{algorithm}"'
-        elif self._statistic_type is StatisticType.EXECUTION_TIMES:
-            self._chart_title = 'Various aggregations of execution times using "{algorithm}"'
-
     def build(self, drawable_stats: DrawableStats, aggregation_types: Iterable, filename: str):
         figure_data = []
         _, results = load_csv_file(drawable_stats.stats_path)

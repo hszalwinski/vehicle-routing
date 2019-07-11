@@ -9,7 +9,7 @@ pytest = "*"
 mock = "*"
 
 [packages]
-ortools = "*"
+ortools = "==6.10.6025"
 googlemaps = "*"
 click = "*"
 numpy = "*"

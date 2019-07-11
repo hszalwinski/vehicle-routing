@@ -21,8 +21,11 @@ Any new run of algorithm will:
 
 This directory is a default one. Of course, the default output file path can be overwritten.
 
+### Schemas
+Used to validate CLI input files.
+
 ### Vehicles
 JSON files describing number of vehicles and their constraints.
 
-## Schemas
-Used to validate CLI input files.
+### Simulations
+Makefile shortcuts for running simulations to get results required for thesis analysis.

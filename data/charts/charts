@@ -1,0 +1,125 @@
+DATASET ?= A
+STATISTIC_TYPE ?= costs
+AGGREGATION_TYPE ?= mean
+CHART_TITLE ?= "Dataset: ${DATASET}, statistic type: ${STATISTIC_TYPE}, aggregation type: ${AGGREGATION_TYPE}"
+
+genetic-max-5-sec:
+	pipenv run python vrp.py custom-chart \
+	-ct ${CHART_TITLE} \
+	-st ${STATISTIC_TYPE} \
+	-of "${AGGREGATION_TYPE}_${STATISTIC_TYPE}_I_II_III" \
+	-at ${AGGREGATION_TYPE} \
+	-if data/results/${DATASET}/genetic/max_5_sec/tsp-I.csv \
+	-if data/results/${DATASET}/genetic/max_5_sec/tsp-II.csv \
+	-if data/results/${DATASET}/genetic/max_5_sec/tsp-III.csv
+
+
+genetic-selection-improvements:
+	pipenv run python vrp.py custom-chart \
+	-ct ${CHART_TITLE} \
+	-st ${STATISTIC_TYPE} \
+	-of "${AGGREGATION_TYPE}_${STATISTIC_TYPE}_I_II_III_IV_V" \
+	-at ${AGGREGATION_TYPE} \
+	-if data/results/${DATASET}/genetic/selection_improvements/tsp-I-chosen.csv \
+	-if data/results/${DATASET}/genetic/selection_improvements/tsp-II.csv \
+	-if data/results/${DATASET}/genetic/selection_improvements/tsp-III.csv \
+	-if data/results/${DATASET}/genetic/selection_improvements/tsp-IV.csv \
+	-if data/results/${DATASET}/genetic/selection_improvements/tsp-V.csv
+
+genetic-crossing-improvements:
+	pipenv run python vrp.py custom-chart \
+	-ct ${CHART_TITLE} \
+	-st ${STATISTIC_TYPE} \
+	-of "${AGGREGATION_TYPE}_${STATISTIC_TYPE}_I_II_III_IV" \
+	-at ${AGGREGATION_TYPE} \
+	-if data/results/${DATASET}/genetic/crossing_improvements/tsp-I-chosen.csv \
+	-if data/results/${DATASET}/genetic/crossing_improvements/tsp-II.csv \
+	-if data/results/${DATASET}/genetic/crossing_improvements/tsp-III.csv \
+	-if data/results/${DATASET}/genetic/crossing_improvements/tsp-IV.csv \
+
+genetic-mutation-improvements:
+	pipenv run python vrp.py custom-chart \
+	-ct ${CHART_TITLE} \
+	-st ${STATISTIC_TYPE} \
+	-of "${AGGREGATION_TYPE}_${STATISTIC_TYPE}_I_II_III_IV" \
+	-at ${AGGREGATION_TYPE} \
+	-if data/results/${DATASET}/genetic/mutation_improvements/tsp-I-chosen.csv \
+	-if data/results/${DATASET}/genetic/mutation_improvements/tsp-II.csv \
+	-if data/results/${DATASET}/genetic/mutation_improvements/tsp-III.csv \
+	-if data/results/${DATASET}/genetic/mutation_improvements/tsp-IV.csv \
+
+genetic-max-5-sec-vs-long:
+	pipenv run python vrp.py custom-chart \
+	-ct ${CHART_TITLE} \
+	-st ${STATISTIC_TYPE} \
+	-of "${AGGREGATION_TYPE}_${STATISTIC_TYPE}_max_5_sec_vs_long" \
+	-at ${AGGREGATION_TYPE} \
+	-if data/results/${DATASET}/genetic/tsp.csv \
+	-if data/results/${DATASET}/genetic/long/tsp-I.csv \
+	-if data/results/${DATASET}/genetic/long/tsp-II-randomness.csv \
+
+simulated-annealing-max-1-sec:
+	pipenv run python vrp.py custom-chart \
+	-ct ${CHART_TITLE} \
+	-st ${STATISTIC_TYPE} \
+	-of "${AGGREGATION_TYPE}_${STATISTIC_TYPE}_I_II_III_IV_V" \
+	-at ${AGGREGATION_TYPE} \
+	-if data/results/${DATASET}/simulated_annealing/max_1_sec/tsp-I.csv \
+	-if data/results/${DATASET}/simulated_annealing/max_1_sec/tsp-II.csv \
+	-if data/results/${DATASET}/simulated_annealing/max_1_sec/tsp-III.csv \
+	-if data/results/${DATASET}/simulated_annealing/max_1_sec/tsp-IV.csv \
+	-if data/results/${DATASET}/simulated_annealing/max_1_sec/tsp-V.csv
+
+simulated-annealing-max-5-sec:
+	pipenv run python vrp.py custom-chart \
+	-ct ${CHART_TITLE} \
+	-st ${STATISTIC_TYPE} \
+	-of "${AGGREGATION_TYPE}_${STATISTIC_TYPE}_II_III_IV" \
+	-at ${AGGREGATION_TYPE} \
+	-if data/results/${DATASET}/simulated_annealing/max_5_sec/tsp-II.csv \
+	-if data/results/${DATASET}/simulated_annealing/max_5_sec/tsp-III.csv \
+	-if data/results/${DATASET}/simulated_annealing/max_5_sec/tsp-IV.csv
+
+all-algorithms-comparison:
+	pipenv run python vrp.py comparison-chart \
+	-ct ${CHART_TITLE} \
+	-st ${STATISTIC_TYPE} \
+	-of "tsp_${AGGREGATION_TYPE}_${STATISTIC_TYPE}_${DATASET}" \
+	-at ${AGGREGATION_TYPE} \
+	-sca data/results/${DATASET}/scan_all/tsp.csv \
+	-or data/results/${DATASET}/ortools/tsp.csv \
+	-g data/results/${DATASET}/genetic/tsp.csv \
+	-sia data/results/${DATASET}/simulated_annealing/tsp.csv
+
+ortools-aggregations:
+	pipenv run python vrp.py aggregation-chart \
+	-ct "Aggregations chart for OR Tools and dataset ${DATASET}" \
+	-st ${STATISTIC_TYPE} \
+	-al ortools \
+	-at min \
+	-at mean \
+	-at max \
+	-if data/results/${DATASET}/ortools/tsp.csv \
+	-of "tsp_ortools_${STATISTIC_TYPE}_${DATASET}"
+
+simulated-annealing-aggregations:
+	pipenv run python vrp.py aggregation-chart \
+	-ct "Aggregations chart for simulated annealing and dataset ${DATASET}" \
+	-st ${STATISTIC_TYPE} \
+	-al simulated-annealing \
+	-at min \
+	-at mean \
+	-at max \
+	-if data/results/${DATASET}/simulated_annealing/tsp.csv \
+	-of "tsp_simulated_annealing_${STATISTIC_TYPE}_${DATASET}"
+
+genetic-aggregations:
+	pipenv run python vrp.py aggregation-chart \
+	-ct "Aggregations chart for genetic algorithm and dataset ${DATASET}" \
+	-st ${STATISTIC_TYPE} \
+	-al genetic \
+	-at min \
+	-at mean \
+	-at max \
+	-if data/results/${DATASET}/genetic/tsp.csv \
+	-of "tsp_genetic_${STATISTIC_TYPE}_${DATASET}"

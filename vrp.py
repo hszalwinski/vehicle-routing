@@ -8,8 +8,9 @@ from algorithms.scan_all import ScanAllSolver
 from algorithms.simulated_annealing import SimulatedAnnealingSolver
 from tools.charts.aggregations import AggregationChart
 from tools.charts.comparison import ComparisonChart
+from tools.charts.custom import CustomChart
 from tools.charts.types import STATISTIC_TYPES, AGGREGATOR_TYPES, ScanAllDrawableStats, ORToolsDrawableStats, \
-    GeneticDrawableStats, SimulatedAnnealingDrawableStats, AggregatorType
+    GeneticDrawableStats, SimulatedAnnealingDrawableStats, AggregatorType, CustomDrawableStats
 from tools.distance_matrix import DistanceMatrixManager
 
 SCAN_ALL = 'scan-all'
@@ -107,6 +108,7 @@ def simulation(algorithm, iterations, distance_matrix, configuration, vehicles, 
 
 
 @cli.command()
+@click.option('--chart-title', '-ct', type=click.STRING, required=True)
 @click.option('--statistic-type', '-st', type=click.Choice(STATISTIC_TYPES), required=True)
 @click.option('--output-filename', '-of', type=click.STRING, required=True)
 @click.option('--aggregation-type', '-at', type=click.Choice(AGGREGATOR_TYPES), required=False,
@@ -115,8 +117,8 @@ def simulation(algorithm, iterations, distance_matrix, configuration, vehicles, 
 @click.option('--ortools', '-or', type=click.Path(exists=True, resolve_path=True), required=False)
 @click.option('--genetic', '-g', type=click.Path(exists=True, resolve_path=True), required=False)
 @click.option('--simulated-annealing', '-sia', type=click.Path(exists=True, resolve_path=True), required=False)
-def comparison_chart(statistic_type, output_filename,
-                     aggregation_type, scan_all=None, ortools=None, genetic=None, simulated_annealing=None):
+def comparison_chart(chart_title, statistic_type, output_filename, aggregation_type,
+                     scan_all=None, ortools=None, genetic=None, simulated_annealing=None):
     """
     Compares different algorithms results.
     """
@@ -131,17 +133,18 @@ def comparison_chart(statistic_type, output_filename,
         drawable_stats.append(SimulatedAnnealingDrawableStats(simulated_annealing))
 
     if drawable_stats:
-        chart = ComparisonChart(statistic_type, aggregation_type)
-        chart.build(drawable_stats, output_filename)
+        chart = ComparisonChart(statistic_type, chart_title)
+        chart.build(drawable_stats, output_filename, aggregation_type)
 
 
 @cli.command()
+@click.option('--chart-title', '-ct', type=click.STRING, required=True)
 @click.option('--statistic-type', '-st', type=click.Choice(STATISTIC_TYPES), required=True)
 @click.option('--algorithm', '-al', type=click.Choice(ALGORITHM_COMMANDS), required=True)
-@click.option('--input_file', '-if', type=click.Path(exists=True, resolve_path=True), required=True)
+@click.option('--input-file', '-if', type=click.Path(exists=True, resolve_path=True), required=True)
 @click.option('--aggregation-type', '-at', type=click.Choice(AGGREGATOR_TYPES), required=True, multiple=True)
 @click.option('--output-filename', '-of', type=click.STRING, required=True)
-def aggregation_chart(statistic_type, algorithm, input_file, aggregation_type, output_filename):
+def aggregation_chart(chart_title, statistic_type, algorithm, input_file, aggregation_type, output_filename):
     """
     Combines multiple result aggregations for a single algorithm. Multiple 'aggregation-type'
     parameters can be provided.
@@ -157,9 +160,24 @@ def aggregation_chart(statistic_type, algorithm, input_file, aggregation_type, o
     else:
         raise Exception('Implementation error')
 
-    aggregation_types = set(aggregation_type)
-    chart = AggregationChart(statistic_type)
-    chart.build(drawable_stats, aggregation_types, output_filename)
+    chart = AggregationChart(statistic_type, chart_title)
+    chart.build(drawable_stats, aggregation_type, output_filename)
+
+
+@cli.command()
+@click.option('--chart-title', '-ct', type=click.STRING, required=True)
+@click.option('--statistic-type', '-st', type=click.Choice(STATISTIC_TYPES), required=True)
+@click.option('--output-filename', '-of', type=click.STRING, required=True)
+@click.option('--aggregation-type', '-at', type=click.Choice(AGGREGATOR_TYPES), required=False,
+              default=AggregatorType.MEAN)
+@click.option('--input-file', '-if', type=click.Path(exists=True, resolve_path=True), required=False, multiple=True)
+def custom_chart(chart_title, statistic_type, output_filename, aggregation_type, input_file):
+    """
+    Compares custom results. Multiple 'input_file' parameters can be provided.
+    """
+    drawable_stats = [CustomDrawableStats(i) for i in input_file]
+    chart = CustomChart(statistic_type, chart_title, aggregation_type)
+    chart.build(drawable_stats, output_filename)
 
 
 if __name__ == '__main__':

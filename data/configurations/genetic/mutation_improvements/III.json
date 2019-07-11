@@ -1,0 +1,13 @@
+{
+  "configuration": {
+    "minimize_longest_single_route": true
+  },
+  "genetic": {
+    "iterations_count": 1100,
+    "population_size": 150,
+    "elite_sequences_ratio": 0.1,
+    "tournament_group_size": 3,
+    "mutated_sequences_ratio": 0.3,
+    "pmx_crossing_ratio": 0.4
+  }
+}

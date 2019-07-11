@@ -12,8 +12,8 @@ class SolverException(Exception):
 
 
 class BaseSolver(metaclass=abc.ABCMeta):
-    CONFIGURATION_SCHEMA_PATH = Path('data', 'configuration_schema.json')
-    VEHICLES_SCHEMA_PATH = Path('data', 'vehicles_schema.json')
+    CONFIGURATION_SCHEMA_PATH = Path('data', 'schemas', 'configuration_schema.json')
+    VEHICLES_SCHEMA_PATH = Path('data', 'schemas', 'vehicles_schema.json')
     DEFAULT_OUTPUT_PATH = Path('data', 'results', 'default.csv')
     OUTPUT_HEADER = ['destinations_count', 'cost', 'execution_time', 'sequence']
 

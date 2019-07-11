@@ -1,0 +1,9 @@
+{
+  "configuration": {
+    "minimize_longest_single_route": true
+  },
+  "simulated_annealing": {
+    "iterations_count": 300000,
+    "temperature_factor": 10000
+  }
+}
