@@ -90,3 +90,36 @@ all-algorithms-comparison:
 	-or data/results/${DATASET}/ortools/tsp.csv \
 	-g data/results/${DATASET}/genetic/tsp.csv \
 	-sia data/results/${DATASET}/simulated_annealing/tsp.csv
+
+ortools-aggregations:
+	pipenv run python vrp.py aggregation-chart \
+	-ct "Aggregations chart for OR Tools and dataset ${DATASET}" \
+	-st ${STATISTIC_TYPE} \
+	-al ortools \
+	-at min \
+	-at mean \
+	-at max \
+	-if data/results/${DATASET}/ortools/tsp.csv \
+	-of "tsp_ortools_${STATISTIC_TYPE}_${DATASET}"
+
+simulated-annealing-aggregations:
+	pipenv run python vrp.py aggregation-chart \
+	-ct "Aggregations chart for simulated annealing and dataset ${DATASET}" \
+	-st ${STATISTIC_TYPE} \
+	-al simulated-annealing \
+	-at min \
+	-at mean \
+	-at max \
+	-if data/results/${DATASET}/simulated_annealing/tsp.csv \
+	-of "tsp_simulated_annealing_${STATISTIC_TYPE}_${DATASET}"
+
+genetic-aggregations:
+	pipenv run python vrp.py aggregation-chart \
+	-ct "Aggregations chart for genetic algorithm and dataset ${DATASET}" \
+	-st ${STATISTIC_TYPE} \
+	-al genetic \
+	-at min \
+	-at mean \
+	-at max \
+	-if data/results/${DATASET}/genetic/tsp.csv \
+	-of "tsp_genetic_${STATISTIC_TYPE}_${DATASET}"
