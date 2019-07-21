@@ -63,6 +63,8 @@ class BaseChart:
         figure = {
             'data': figure_data,
             'layout': {
+                'font': dict(size=18),
+                'legend': dict(orientation="h"),
                 'title': self._chart_title,
                 'xaxis': {'title': 'Destinations count'},
                 'yaxis': self._yaxis,
