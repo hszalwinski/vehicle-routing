@@ -130,10 +130,6 @@ class GeneticSolver(BaseSolver):
 
         new_sequence[start_index:end_index] = part_from_a
 
-        sequence_set = set(new_sequence)
-        if len(new_sequence) != len(sequence_set):
-            print(new_sequence)
-            print(sequence_set)
         return new_sequence
 
     def _mutate_population(self, population: List[List[int]]) -> List[List[int]]:

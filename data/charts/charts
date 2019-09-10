@@ -91,6 +91,17 @@ all-algorithms-comparison:
 	-g data/results/${DATASET}/genetic/tsp.csv \
 	-sia data/results/${DATASET}/simulated_annealing/tsp.csv
 
+scan-all-aggregations:
+	pipenv run python vrp.py aggregation-chart \
+	-ct "Aggregations chart for scan-all and dataset ${DATASET}" \
+	-st ${STATISTIC_TYPE} \
+	-al scan-all \
+	-at min \
+	-at mean \
+	-at max \
+	-if data/results/${DATASET}/scan_all/tsp.csv \
+	-of "tsp_scan_all_${STATISTIC_TYPE}_${DATASET}"
+
 ortools-aggregations:
 	pipenv run python vrp.py aggregation-chart \
 	-ct "Aggregations chart for OR Tools and dataset ${DATASET}" \
