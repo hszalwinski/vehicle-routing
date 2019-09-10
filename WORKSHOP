@@ -1,0 +1,11 @@
+1. Jak wygląda drzewo plików projektu? Co zostało użyte? Pipfile
+
+make run-tests
+make run-mypy
+
+2.
+python vrp.py
+python vrp.py distance-matrix --help
+
+Stworzyć dm z pliku z lokalizacjami.
+python vrp.py distance-matrix -i workshop/locations.json -oc workshop/dm.csv -op workshop/dm.pickle
