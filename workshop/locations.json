@@ -2,51 +2,61 @@
   {
     "locationId": 1,
     "latitude": 54.316257,
-    "longitude": 18.60517
+    "longitude": 18.60517,
+    "name": "undefined"
   },
   {
     "locationId": 2,
     "latitude": 54.37085,
-    "longitude": 18.55796
+    "longitude": 18.55796,
+    "name": "undefined"
   },
   {
     "locationId": 3,
     "latitude": 54.36601,
-    "longitude": 18.6413
+    "longitude": 18.6413,
+    "name": "undefined"
   },
   {
     "locationId": 4,
     "latitude": 54.34991,
-    "longitude": 18.62933
+    "longitude": 18.62933,
+    "name": "undefined"
   },
   {
     "locationId": 5,
     "latitude": 54.35055,
-    "longitude": 18.65736
+    "longitude": 18.65736,
+    "name": "undefined"
   },
   {
     "locationId": 6,
     "latitude": 54.343,
-    "longitude": 18.671
+    "longitude": 18.671,
+    "name": "undefined"
   },
   {
     "locationId": 7,
     "latitude": 54.32999,
-    "longitude": 18.64315
+    "longitude": 18.64315,
+    "name": "undefined"
   },
   {
     "locationId": 8,
     "latitude": 54.32769,
-    "longitude": 18.65036
+    "longitude": 18.65036,
+    "name": "undefined"
   },
   {
     "locationId": 9,
     "latitude": 54.34931,
-    "longitude": 18.60573
+    "longitude": 18.60573,
+    "name": "undefined"
   },
   {
     "locationId": 10,
     "latitude": 54.36241,
-    "longitude": 18.62598
+    "longitude": 18.62598,
+    "name": "undefined"
   }
 ]

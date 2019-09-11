@@ -7,5 +7,22 @@ make run-mypy
 python vrp.py
 python vrp.py distance-matrix --help
 
+3. Stworzyć mapkę na mapmaker. Zaimportować i uruchomić csv_to_json.py
 Stworzyć dm z pliku z lokalizacjami.
 python vrp.py distance-matrix -i workshop/locations.json -oc workshop/dm.csv -op workshop/dm.pickle
+
+4. Uruchomić algorytmy
+python vrp.py scan-all -d workshop/dm.pickle -c workshop/config.json -v workshop/vehicles.json -o workshop/results/scan-all.csv
+python vrp.py or-tools -d workshop/dm.pickle -c workshop/config.json -v workshop/vehicles.json -o workshop/results/or-tools.csv
+python vrp.py simulated-annealing -d workshop/dm.pickle -c workshop/config.json -v workshop/vehicles.json -o workshop/results/simulated-annealing.csv
+python vrp.py genetic -d workshop/dm.pickle -c workshop/config.json -v workshop/vehicles.json -o workshop/results/genetic.csv
+
+5. Uruchomić symulację
+python vrp.py simulation -al genetic -i 30 -d workshop/dm.pickle -c workshop/config.json -v workshop/vehicles.json -o workshop/results/genetic.csv
+
+6. Skopiować wyniki do listy w scratchu i znaleźć min. Skopiować najlepszą sekwencję do result_to_csv.py.
+Wkleić do mapmakera.com.
+
+7. Pokazać folder data
+
+8. Pokazać diagramy i podsumowanie.
