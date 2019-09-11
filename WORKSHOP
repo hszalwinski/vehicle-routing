@@ -1,3 +1,14 @@
+Rodzaje VRP:
+* symetryczny / niesymetryczny - koszty 'do' i 'z'
+* ładowność i zasięg samochodu
+* minimalny poziom ładowności
+* tylko jedna wizyta po odbiór towaru
+* maksymalny czas pracy kierowcy
+* wiele punktów depozytu
+* opcjonalne węzły
+* odwiedzanie cykliczne
+
+
 1. Jak wygląda drzewo plików projektu? Co zostało użyte? Pipfile
 
 make run-tests
@@ -26,3 +37,15 @@ Wkleić do mapmakera.com.
 7. Pokazać folder data
 
 8. Pokazać diagramy i podsumowanie.
+
+• The current computers will not improve much in solving complicated VRP prob-
+lems without algorithm improvements. - The brute-force complexity illustrates how
+fast VRP problems become unsolvable in a reasonable time.
+• Simpler algorithms mean generally worse results. - Simulated annealing and brute-
+force were not able to reach acceptable solution quality levels for harder problem instances.
+Great results for easier instances usually have no application in real life.
+• Building reliable solutions is very work consuming. - OR Tools library was founded
+by one of the biggest corporations on the globe and lots of effort have been put to deliver
+such quality. Genetic algorithm implemented especially for this thesis was not able to win
+the contest, but showed that even one person can receive satisfactory results. To achieve
+this, much more work was required than e.g. implementing simulated annealing.
