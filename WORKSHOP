@@ -1,4 +1,9 @@
-Rodzaje VRP:
+Teza i cel pracy:
+
+Cel VRP:
+Zaprojektowanie optymalnego zbioru ścieżek dla floty pojazdów mających za zadanie odwiedzić wszystkich klientów i wrócić do bazy.
+Przykład: kurier, skupy runa leśnego
+Zajawka - rodzaje VRP:
 * symetryczny / niesymetryczny - koszty 'do' i 'z'
 * ładowność i zasięg samochodu
 * minimalny poziom ładowności
@@ -8,44 +13,50 @@ Rodzaje VRP:
 * opcjonalne węzły
 * odwiedzanie cykliczne
 
+TSP:
+Najprostszy przypadek VRP. 1 pojazd, 1 baza, brak dodatkowych ograniczeń
+Jaka najkrótsza ścieżka?
+Poglądowy graf nieskierowany -> skierowany z najkrótszą odległością == macierz odległości
 
-1. Jak wygląda drzewo plików projektu? Co zostało użyte? Pipfile
+MapMapker - zaimportować do locations.csv
+1. Uruchomić csv_to_json.py - pokazać wynik
+2. Potrzebujemy macierzy odległości. CLI - Pipfile co zostało użyte?
 
-make run-tests
-make run-mypy
-
-2.
 python vrp.py
 python vrp.py distance-matrix --help
 
-3. Stworzyć mapkę na mapmaker. Zaimportować i uruchomić csv_to_json.py
+https://developers.google.com/maps/documentation/distance-matrix/intro#DistanceMatrixRequests
+
 Stworzyć dm z pliku z lokalizacjami.
 python vrp.py distance-matrix -i workshop/locations.json -oc workshop/dm.csv -op workshop/dm.pickle
+source workshop/key.sh
 
-4. Uruchomić algorytmy
+3. Uruchomić algorytmy i opowiedzieć o nich, pokazać konfigurację
 python vrp.py scan-all -d workshop/dm.pickle -c workshop/config.json -v workshop/vehicles.json -o workshop/results/scan-all.csv
-python vrp.py or-tools -d workshop/dm.pickle -c workshop/config.json -v workshop/vehicles.json -o workshop/results/or-tools.csv
-python vrp.py simulated-annealing -d workshop/dm.pickle -c workshop/config.json -v workshop/vehicles.json -o workshop/results/simulated-annealing.csv
+python vrp.py ortools -d workshop/dm.pickle -c workshop/config.json -v workshop/vehicles.json -o workshop/results/or-tools.csv
 python vrp.py genetic -d workshop/dm.pickle -c workshop/config.json -v workshop/vehicles.json -o workshop/results/genetic.csv
+python vrp.py simulated-annealing -d workshop/dm.pickle -c workshop/config.json -v workshop/vehicles.json -o workshop/results/simulated-annealing.csv
 
-5. Uruchomić symulację
+4. Uruchomić symulację
 python vrp.py simulation -al genetic -i 30 -d workshop/dm.pickle -c workshop/config.json -v workshop/vehicles.json -o workshop/results/genetic.csv
 
-6. Skopiować wyniki do listy w scratchu i znaleźć min. Skopiować najlepszą sekwencję do result_to_csv.py.
+5. Skopiować wyniki do listy w scratchu i znaleźć min. Skopiować najlepszą sekwencję do result_to_csv.py.
 Wkleić do mapmakera.com.
 
-7. Pokazać folder data
+6. Pokazać folder data
 
-8. Pokazać diagramy i podsumowanie.
+7. Pokazać diagramy i podsumowanie.
 
-• The current computers will not improve much in solving complicated VRP prob-
-lems without algorithm improvements. - The brute-force complexity illustrates how
-fast VRP problems become unsolvable in a reasonable time.
-• Simpler algorithms mean generally worse results. - Simulated annealing and brute-
-force were not able to reach acceptable solution quality levels for harder problem instances.
-Great results for easier instances usually have no application in real life.
-• Building reliable solutions is very work consuming. - OR Tools library was founded
-by one of the biggest corporations on the globe and lots of effort have been put to deliver
-such quality. Genetic algorithm implemented especially for this thesis was not able to win
-the contest, but showed that even one person can receive satisfactory results. To achieve
-this, much more work was required than e.g. implementing simulated annealing.
+• Aktualne komputery nie poprawią znacząco wyników w rozwiązywaniu skomplikowanych problemów marszrutyzacji
+bez postępów w algorytmach. Złożoność rozwiązań przy pomocy brute-force ilustruje jak szybko zadania marszrutyzacji
+stają się nierozwiązywalne w sensownym czasie.
+
+• Generalnie im prostszy algorytm tym gorsze rezultaty. Symulowane wyżarzanie i brute-force nie były w stanie osiągnąć
+akceptowalnej jakości rozwiązań dla trudniejszych przypadków. Ich świetne rezultaty dla prostszych przypadków przeważnie
+nie mają zastosowania w życiu.
+
+• Budowanie niezawodnych rozwiązań wymaga dużo pracy. Biblioteka OR Tools została stworzona przez jedną z największych
+korporacji na globie i pochłonęła dużo wysiłków aby osiągnąć wysoką jakość. Z drugiej strony, algorytm genetyczny
+zaimplementowany na potrzeby moich badań pokazał, że nawet jedna osoba jest w stanie osiągnąć zadowalające wyniki, mimo iż
+są one gorsze od wyników OR Tools. Niemniej jednak implementacja algorytmu genetycznego była trudniejsza niż implementacja
+symulowanego wyżarzania.

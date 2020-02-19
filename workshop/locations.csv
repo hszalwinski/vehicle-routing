@@ -1,11 +1,11 @@
-name,latitude,longitude
-undefined,54.316257,18.60517
-undefined,54.37085,18.55796
-undefined,54.36601,18.6413
-undefined,54.34991,18.62933
-undefined,54.35055,18.65736
-undefined,54.343,18.671
-undefined,54.32999,18.64315
-undefined,54.32769,18.65036
-undefined,54.34931,18.60573
-undefined,54.36241,18.62598
+name;latitude;longitude
+Zbiornik Wody Stara Orunia;54.31912;18.62431
+Kozacza Gora;54.32366;18.59739
+Gora Gradowa;54.35766;18.64022
+Pacholek;54.41167;18.55079
+Bazylika Mariacka;54.34986;18.65314
+Kolibki;54.46697;18.54308
+Gora Donas;54.46921;18.43721
+Latarnia Morska Sopot;54.44538;18.57047
+Klif Orlowski;54.4854;18.5682
+Gnilna Gora;54.43424;18.54686

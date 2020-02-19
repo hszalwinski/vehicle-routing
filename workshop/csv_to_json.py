@@ -6,7 +6,7 @@ from tools.file_operations import load_csv_file
 csv_path = Path('workshop/locations.csv')
 json_path = Path('workshop/locations.json')
 
-header, rows = load_csv_file(csv_path, delimiter=',')
+header, rows = load_csv_file(csv_path, delimiter=';')
 i = 1
 json_content = []
 for row in rows:
